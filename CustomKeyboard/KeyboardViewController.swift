@@ -55,7 +55,7 @@ class KeyboardViewController: UIInputViewController {
         guard let title = sender.titleLabel?.text else {
             return
         }
-        if title == "⇤" {//⇪⇤
+        if title == "⇤" {
             proxy.deleteBackward()
         } else {
             proxy.insertText(title)
@@ -66,7 +66,6 @@ class KeyboardViewController: UIInputViewController {
         let nib = UINib(nibName: "KeyboardView", bundle: nil)
         let objects = nib.instantiate(withOwner: self, options: nil)
         keyboardView = (objects.first as! UIView)
-        keyboardView.frame.size = view.frame.size
         view.addSubview(keyboardView)
 
         keyboardView.translatesAutoresizingMaskIntoConstraints = false
