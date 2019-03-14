@@ -55,10 +55,14 @@ class KeyboardViewController: UIInputViewController {
         guard let title = sender.titleLabel?.text else {
             return
         }
-        proxy.insertText(title)
+        if title == "⇤" {//⇪⇤
+            proxy.deleteBackward()
+        } else {
+            proxy.insertText(title)
+        }
     }
 
-    func loadAndSetupInterface(){
+    func loadAndSetupInterface() {
         let nib = UINib(nibName: "KeyboardView", bundle: nil)
         let objects = nib.instantiate(withOwner: self, options: nil)
         keyboardView = (objects.first as! UIView)
