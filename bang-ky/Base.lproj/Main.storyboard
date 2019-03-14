@@ -19,9 +19,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bl2-EA-lmp">
-                                <rect key="frame" x="147.5" y="318.5" width="80" height="30"/>
+                                <rect key="frame" x="87.5" y="283.5" width="200" height="100"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="e3s-Dr-cQi"/>
+                                    <constraint firstAttribute="height" constant="100" id="27d-Mc-wip"/>
+                                    <constraint firstAttribute="width" constant="200" id="e3s-Dr-cQi"/>
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -35,6 +36,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="textField" destination="bl2-EA-lmp" id="0PN-pm-dqG"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

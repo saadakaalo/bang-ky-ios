@@ -11,6 +11,8 @@ import UIKit
 class KeyboardViewController: UIInputViewController {
 
     @IBOutlet var nextKeyboardButton: UIButton!
+    var keyboardView: UIView!
+    var proxy : UITextDocumentProxy!
     
     override func updateViewConstraints() {
         super.updateViewConstraints()
@@ -20,37 +22,55 @@ class KeyboardViewController: UIInputViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Perform custom UI setup here
-        self.nextKeyboardButton = UIButton(type: .system)
-        
-        self.nextKeyboardButton.setTitle(NSLocalizedString("Next Keyboard", comment: "Title for 'Next Keyboard' button"), for: [])
-        self.nextKeyboardButton.sizeToFit()
-        self.nextKeyboardButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        self.nextKeyboardButton.addTarget(self, action: #selector(handleInputModeList(from:with:)), for: .allTouchEvents)
-        
-        self.view.addSubview(self.nextKeyboardButton)
-        
-        self.nextKeyboardButton.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-        self.nextKeyboardButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+
+        loadAndSetupInterface()
+        proxy = textDocumentProxy as UITextDocumentProxy
+        nextKeyboardButton.addTarget(self, action: #selector(UIInputViewController.advanceToNextInputMode), for: .touchUpInside)
+        //        self.nextKeyboardButton.addTarget(self, action: #selector(handleInputModeList(from:with:)), for: .allTouchEvents)
+
+
+
     }
     
     override func textWillChange(_ textInput: UITextInput?) {
         // The app is about to change the document's contents. Perform any preparation here.
+        print("textWillChange")
     }
     
     override func textDidChange(_ textInput: UITextInput?) {
         // The app has just changed the document's contents, the document context has been updated.
-        
-        var textColor: UIColor
-        let proxy = self.textDocumentProxy
-        if proxy.keyboardAppearance == UIKeyboardAppearance.dark {
-            textColor = UIColor.white
-        } else {
-            textColor = UIColor.black
+
+        print("textDidChange")
+//        var textColor: UIColor
+//        let proxy = self.textDocumentProxy
+//        if proxy.keyboardAppearance == UIKeyboardAppearance.dark {
+//            textColor = UIColor.magenta
+//        } else {
+//            textColor = UIColor.green
+//        }
+//        self.nextKeyboardButton.setTitleColor(textColor, for: [])
+    }
+    
+    @IBAction func buttonTapped(_ sender: UIButton) {
+        guard let title = sender.titleLabel?.text else {
+            return
         }
-        self.nextKeyboardButton.setTitleColor(textColor, for: [])
+        proxy.insertText(title)
     }
 
+    func loadAndSetupInterface(){
+        let nib = UINib(nibName: "KeyboardView", bundle: nil)
+        let objects = nib.instantiate(withOwner: self, options: nil)
+        keyboardView = (objects.first as! UIView)
+        keyboardView.frame.size = view.frame.size
+        view.addSubview(keyboardView)
+
+        keyboardView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            keyboardView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            keyboardView.topAnchor.constraint(equalTo: view.topAnchor),
+            keyboardView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            keyboardView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ])
+    }
 }
