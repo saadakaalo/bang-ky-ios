@@ -17,6 +17,7 @@
 		8D9FF0D8223A244A00A981DE /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9FF0D7223A244A00A981DE /* KeyboardViewController.swift */; };
 		8D9FF0DC223A244A00A981DE /* CustomKeyboard.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8D9FF0D5223A244900A981DE /* CustomKeyboard.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8D9FF0E2223A426C00A981DE /* KeyboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D9FF0E1223A426C00A981DE /* KeyboardView.xib */; };
+		8DCF210D223BB572000576EA /* CapitalLetterKeyboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DCF210C223BB572000576EA /* CapitalLetterKeyboardView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		8D9FF0D7223A244A00A981DE /* KeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
 		8D9FF0D9223A244A00A981DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D9FF0E1223A426C00A981DE /* KeyboardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KeyboardView.xib; sourceTree = "<group>"; };
+		8DCF210C223BB572000576EA /* CapitalLetterKeyboardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CapitalLetterKeyboardView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +170,7 @@
 				8D9FF0D7223A244A00A981DE /* KeyboardViewController.swift */,
 				8D9FF0D9223A244A00A981DE /* Info.plist */,
 				8D9FF0E1223A426C00A981DE /* KeyboardView.xib */,
+				8DCF210C223BB572000576EA /* CapitalLetterKeyboardView.xib */,
 			);
 			path = CustomKeyboard;
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DCF210D223BB572000576EA /* CapitalLetterKeyboardView.xib in Resources */,
 				8D9FF0E2223A426C00A981DE /* KeyboardView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -527,7 +531,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 2BL4KQW6R5;
 				INFOPLIST_FILE = "bang-ky/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -548,7 +552,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 2BL4KQW6R5;
 				INFOPLIST_FILE = "bang-ky/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -645,6 +649,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 2BL4KQW6R5;
 				INFOPLIST_FILE = CustomKeyboard/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -665,6 +670,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 2BL4KQW6R5;
 				INFOPLIST_FILE = CustomKeyboard/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
