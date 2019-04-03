@@ -59,6 +59,8 @@ class KeyboardViewController: UIInputViewController {
         } else if title == "⇪" {
             swapCapitalAndSmallLetterKeyboard()
             print("Shift button tapped")
+        } else if title == "🌐" {
+            advanceToNextInputMode()
         } else {
             proxy.insertText(title)
         }
