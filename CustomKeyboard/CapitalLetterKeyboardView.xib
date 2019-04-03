@@ -292,11 +292,6 @@
                     </subviews>
                     <color key="backgroundColor" red="0.58081901069999997" green="0.088427625600000004" blue="0.31863921880000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </stackView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iAw-ir-XH9">
-                    <rect key="frame" x="99.5" y="110" width="121" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Change keyboard"/>
-                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="F9U-GC-c8e" firstAttribute="bottom" secondItem="3cU-z3-Zo6" secondAttribute="bottom" id="C7X-7H-VbY"/>
@@ -306,11 +301,6 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="F9U-GC-c8e"/>
-            <variation key="default">
-                <mask key="subviews">
-                    <exclude reference="iAw-ir-XH9"/>
-                </mask>
-            </variation>
             <point key="canvasLocation" x="-13" y="-112"/>
         </view>
     </objects>
