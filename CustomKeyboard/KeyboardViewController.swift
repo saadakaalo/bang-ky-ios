@@ -24,6 +24,9 @@ class KeyboardViewController: UIInputViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        ///Fixed height for the keyboard
+        view.heightAnchor.constraint(equalToConstant: 250).isActive = true;
+
         loadAndSetupInterface()
         proxy = textDocumentProxy as UITextDocumentProxy
     }
@@ -74,7 +77,7 @@ class KeyboardViewController: UIInputViewController {
         smallLetterKeyboardView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             smallLetterKeyboardView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            smallLetterKeyboardView.topAnchor.constraint(equalTo: view.topAnchor),
+            smallLetterKeyboardView.topAnchor.constraint(equalTo: view.topAnchor, constant: 30),
             smallLetterKeyboardView.rightAnchor.constraint(equalTo: view.rightAnchor),
             smallLetterKeyboardView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
@@ -93,7 +96,7 @@ class KeyboardViewController: UIInputViewController {
         capitalLetterKeyboardView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             capitalLetterKeyboardView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            capitalLetterKeyboardView.topAnchor.constraint(equalTo: view.topAnchor),
+            smallLetterKeyboardView.topAnchor.constraint(equalTo: view.topAnchor, constant: 30),
             capitalLetterKeyboardView.rightAnchor.constraint(equalTo: view.rightAnchor),
             capitalLetterKeyboardView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
