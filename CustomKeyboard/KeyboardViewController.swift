@@ -27,7 +27,7 @@ class KeyboardViewController: UIInputViewController {
         ///Fixed height for the keyboard
         view.heightAnchor.constraint(equalToConstant: 250).isActive = true;
 
-        loadAndSetupInterface()
+        addKeyboardUIToRootView(isCapital: false)
         proxy = textDocumentProxy as UITextDocumentProxy
     }
     
@@ -57,48 +57,49 @@ class KeyboardViewController: UIInputViewController {
 
     func swapCapitalAndSmallLetterKeyboard() {
         if isCapital {
-            loadAndSetupInterface()
+            addKeyboardUIToRootView(isCapital: false)
         } else {
-            loadAndSetupCapitalLetterInterface()
+            addKeyboardUIToRootView(isCapital: true)
         }
         isCapital = !isCapital
     }
 
-    func loadAndSetupInterface() {
-        if let keyboard = capitalLetterKeyboardView {
-            keyboard.removeFromSuperview()
+
+    func addKeyboardUIToRootView(isCapital: Bool) {
+
+        loadKeyboardViewsIfNotLoaded()
+
+        let keyboardViewToAdd: UIView
+        if isCapital {
+            smallLetterKeyboardView.removeFromSuperview()
+            keyboardViewToAdd = capitalLetterKeyboardView
+        } else {
+            capitalLetterKeyboardView.removeFromSuperview()
+            keyboardViewToAdd = smallLetterKeyboardView
         }
 
-        let nib = UINib(nibName: "KeyboardView", bundle: nil)
-        let objects = nib.instantiate(withOwner: self, options: nil)
-        smallLetterKeyboardView = (objects.first as! UIView)
-        view.addSubview(smallLetterKeyboardView)
+        view.addSubview(keyboardViewToAdd)
 
-        smallLetterKeyboardView.translatesAutoresizingMaskIntoConstraints = false
+        keyboardViewToAdd.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            smallLetterKeyboardView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            smallLetterKeyboardView.topAnchor.constraint(equalTo: view.topAnchor, constant: 30),
-            smallLetterKeyboardView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            smallLetterKeyboardView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            keyboardViewToAdd.leftAnchor.constraint(equalTo: view.leftAnchor),
+            keyboardViewToAdd.topAnchor.constraint(equalTo: view.topAnchor, constant: 30),
+            keyboardViewToAdd.rightAnchor.constraint(equalTo: view.rightAnchor),
+            keyboardViewToAdd.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
     }
 
-    func loadAndSetupCapitalLetterInterface() {
-        if let keyboard = smallLetterKeyboardView {
-            keyboard.removeFromSuperview()
+    func loadKeyboardViewsIfNotLoaded() {
+        if smallLetterKeyboardView == nil {
+            let nib = UINib(nibName: "KeyboardView", bundle: nil)
+            let objects = nib.instantiate(withOwner: self, options: nil)
+            smallLetterKeyboardView = (objects.first as! UIView)
         }
 
-        let nib = UINib(nibName: "CapitalLetterKeyboardView", bundle: nil)
-        let objects = nib.instantiate(withOwner: self, options: nil)
-        capitalLetterKeyboardView = (objects.first as! UIView)
-        view.addSubview(capitalLetterKeyboardView)
-
-        capitalLetterKeyboardView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            capitalLetterKeyboardView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            smallLetterKeyboardView.topAnchor.constraint(equalTo: view.topAnchor, constant: 30),
-            capitalLetterKeyboardView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            capitalLetterKeyboardView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-            ])
+        if capitalLetterKeyboardView == nil {
+            let nibForCap = UINib(nibName: "CapitalLetterKeyboardView", bundle: nil)
+            let objectsForCap = nibForCap.instantiate(withOwner: self, options: nil)
+            capitalLetterKeyboardView = (objectsForCap.first as! UIView)
+        }
     }
 }
