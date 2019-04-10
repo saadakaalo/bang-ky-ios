@@ -8,10 +8,12 @@
 
 import UIKit
 
-class KeyboardViewController: UIInputViewController {
+class KeyboardViewController: UIInputViewController, KeyboardLettersDelegate, KeyboardNumbersDelegate {
 
     var smallLetterKeyboardView: UIView!
     var capitalLetterKeyboardView: UIView!
+    var lettersView: KeyboardLettersView!
+    var numbersView: KeyboardNumbersView!
     var proxy : UITextDocumentProxy!
     var isCapital = false
     
@@ -30,14 +32,27 @@ class KeyboardViewController: UIInputViewController {
 //        addKeyboardUIToRootView(isCapital: false)
 
 
-        smallLetterKeyboardView = KeyboardLettersView(frame: CGRect(x: 0, y: 0, width: 250, height: 250))
-        view.addSubview(smallLetterKeyboardView)
-        smallLetterKeyboardView.translatesAutoresizingMaskIntoConstraints = false
+        lettersView = KeyboardLettersView(frame: CGRect(x: 0, y: 0, width: 250, height: 250))
+        lettersView.delegate = self
+        view.addSubview(lettersView)
+        lettersView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            smallLetterKeyboardView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            smallLetterKeyboardView.topAnchor.constraint(equalTo: view.topAnchor, constant: 30),
-            smallLetterKeyboardView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            smallLetterKeyboardView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            lettersView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            lettersView.topAnchor.constraint(equalTo: view.topAnchor, constant: 30),
+            lettersView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            lettersView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ])
+
+        numbersView = KeyboardNumbersView(frame: CGRect(x: 0, y: 0, width: 250, height: 250))
+        numbersView.isHidden = true
+        numbersView.delegate = self
+        view.addSubview(numbersView)
+        numbersView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            numbersView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            numbersView.topAnchor.constraint(equalTo: view.topAnchor, constant: 30),
+            numbersView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            numbersView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
 
         proxy = textDocumentProxy as UITextDocumentProxy
@@ -112,5 +127,24 @@ class KeyboardViewController: UIInputViewController {
             let objectsForCap = nibForCap.instantiate(withOwner: self, options: nil)
             capitalLetterKeyboardView = (objectsForCap.first as! UIView)
         }
+    }
+
+    // MARK: KeyboardLettersDelegate and KeyboardNumbersDelegate methods
+
+    var returnLabel: String = ""
+    var shouldResetInsertionPoint: Bool = false
+
+    func transform(_ s: String) -> String {
+        return s
+    }
+
+    func didLetters(_ button: UIButton) {
+        lettersView.isHidden = false
+        numbersView.isHidden = true
+    }
+
+    func didNumbers(_ button: UIButton) {
+        lettersView.isHidden = true
+        numbersView.isHidden = false
     }
 }
