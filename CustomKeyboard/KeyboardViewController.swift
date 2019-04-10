@@ -27,7 +27,19 @@ class KeyboardViewController: UIInputViewController {
         ///Fixed height for the keyboard
         view.heightAnchor.constraint(equalToConstant: 250).isActive = true;
 
-        addKeyboardUIToRootView(isCapital: false)
+//        addKeyboardUIToRootView(isCapital: false)
+
+
+        smallLetterKeyboardView = KeyboardLettersView(frame: CGRect(x: 0, y: 0, width: 250, height: 250))
+        view.addSubview(smallLetterKeyboardView)
+        smallLetterKeyboardView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            smallLetterKeyboardView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            smallLetterKeyboardView.topAnchor.constraint(equalTo: view.topAnchor, constant: 30),
+            smallLetterKeyboardView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            smallLetterKeyboardView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ])
+
         proxy = textDocumentProxy as UITextDocumentProxy
     }
     
@@ -47,7 +59,6 @@ class KeyboardViewController: UIInputViewController {
             proxy.deleteBackward()
         } else if title == "⇪" {
             swapCapitalAndSmallLetterKeyboard()
-            print("Shift button tapped")
         } else if title == "🌐" {
             advanceToNextInputMode()
         } else {

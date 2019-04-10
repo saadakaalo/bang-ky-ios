@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D305B03225DC3B2002122C5 /* KeyboardLettersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D305AFF225DC3B1002122C5 /* KeyboardLettersView.m */; };
+		8D305B04225DC3B2002122C5 /* KeyboardNumbersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D305B00225DC3B1002122C5 /* KeyboardNumbersView.m */; };
+		8D305B05225DC3B2002122C5 /* HolderButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D305B01225DC3B1002122C5 /* HolderButton.m */; };
 		8D9FF0A4223A215700A981DE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9FF0A3223A215700A981DE /* AppDelegate.swift */; };
 		8D9FF0A6223A215700A981DE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9FF0A5223A215700A981DE /* ViewController.swift */; };
 		8D9FF0A9223A215700A981DE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D9FF0A7223A215700A981DE /* Main.storyboard */; };
@@ -59,6 +62,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8D305AFC225DC3AF002122C5 /* CustomKeyboard-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CustomKeyboard-Bridging-Header.h"; sourceTree = "<group>"; };
+		8D305AFD225DC3B0002122C5 /* KeyboardLettersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardLettersView.h; sourceTree = "<group>"; };
+		8D305AFE225DC3B1002122C5 /* KeyboardNumbersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardNumbersView.h; sourceTree = "<group>"; };
+		8D305AFF225DC3B1002122C5 /* KeyboardLettersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardLettersView.m; sourceTree = "<group>"; };
+		8D305B00225DC3B1002122C5 /* KeyboardNumbersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardNumbersView.m; sourceTree = "<group>"; };
+		8D305B01225DC3B1002122C5 /* HolderButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HolderButton.m; sourceTree = "<group>"; };
+		8D305B02225DC3B2002122C5 /* HolderButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HolderButton.h; sourceTree = "<group>"; };
 		8D9FF0A0223A215700A981DE /* bang-ky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "bang-ky.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D9FF0A3223A215700A981DE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8D9FF0A5223A215700A981DE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -167,10 +177,17 @@
 		8D9FF0D6223A244A00A981DE /* CustomKeyboard */ = {
 			isa = PBXGroup;
 			children = (
+				8D305B02225DC3B2002122C5 /* HolderButton.h */,
+				8D305B01225DC3B1002122C5 /* HolderButton.m */,
+				8D305AFD225DC3B0002122C5 /* KeyboardLettersView.h */,
+				8D305AFF225DC3B1002122C5 /* KeyboardLettersView.m */,
+				8D305AFE225DC3B1002122C5 /* KeyboardNumbersView.h */,
+				8D305B00225DC3B1002122C5 /* KeyboardNumbersView.m */,
 				8D9FF0D7223A244A00A981DE /* KeyboardViewController.swift */,
 				8D9FF0D9223A244A00A981DE /* Info.plist */,
 				8D9FF0E1223A426C00A981DE /* KeyboardView.xib */,
 				8DCF210C223BB572000576EA /* CapitalLetterKeyboardView.xib */,
+				8D305AFC225DC3AF002122C5 /* CustomKeyboard-Bridging-Header.h */,
 			);
 			path = CustomKeyboard;
 			sourceTree = "<group>";
@@ -273,6 +290,7 @@
 					};
 					8D9FF0D4223A244900A981DE = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1010;
 					};
 				};
 			};
@@ -363,7 +381,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D305B04225DC3B2002122C5 /* KeyboardNumbersView.m in Sources */,
 				8D9FF0D8223A244A00A981DE /* KeyboardViewController.swift in Sources */,
+				8D305B03225DC3B2002122C5 /* KeyboardLettersView.m in Sources */,
+				8D305B05225DC3B2002122C5 /* HolderButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -646,6 +667,7 @@
 		8D9FF0DE223A244A00A981DE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 2BL4KQW6R5;
 				INFOPLIST_FILE = CustomKeyboard/Info.plist;
@@ -659,6 +681,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = BJITWILDCARD_DEV;
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "CustomKeyboard/CustomKeyboard-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -667,6 +691,7 @@
 		8D9FF0DF223A244A00A981DE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 2BL4KQW6R5;
 				INFOPLIST_FILE = CustomKeyboard/Info.plist;
@@ -680,6 +705,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = BJITWILDCARD_DEV;
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "CustomKeyboard/CustomKeyboard-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
