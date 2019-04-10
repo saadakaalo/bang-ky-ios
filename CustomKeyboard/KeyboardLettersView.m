@@ -74,6 +74,7 @@ static NSString *kShift = @"⬆︎";
                     // Without the redundant set, it shows an emoji for the button title.
                     [button setTitle:kShift forState:UIControlStateNormal];
                     [button addTarget:self action:@selector(didShift:) forControlEvents:UIControlEventTouchUpInside];
+                    /// FIXME: This double tap recogniser slowed down the shift operation
                     UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didDoubleTap:)];
                     [tapper setNumberOfTapsRequired:2];
                     [button addGestureRecognizer:tapper];
