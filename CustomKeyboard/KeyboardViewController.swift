@@ -61,8 +61,8 @@ class KeyboardViewController: UIInputViewController, KeyboardLettersDelegate, Ke
     var shouldResetInsertionPoint: Bool = false
 
     func transform(_ s: String) -> String {
-        let transformer = Transformer.shared
-        return transformer.transform(s)
+        let sharedTransformer = Transformer.shared
+        return sharedTransformer.transform(s)
     }
 
     func didLetters(_ button: UIButton) {
