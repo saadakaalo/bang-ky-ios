@@ -41,7 +41,7 @@ class Transformer {
         "A" : "অ",
         "B" : "ভ",
         "C" : "ছ",
-        "D" : "ধ",
+        "D" : "ড",
         "E" : "এ",
         "F" : "ফ",
         "G" : "ঘ",
@@ -86,26 +86,30 @@ class Transformer {
         }
 
         if s == "h" {
-            if lastLetter == "d" {
-                transliteratedLetter = "-ধ"
-            }
-            if lastLetter == "t" {
-                transliteratedLetter = "-থ"
-            }
-            if lastLetter == "p" {
-                transliteratedLetter = "-ফ"
-            }
-            if lastLetter == "b" {
+
+            switch lastLetter {
+            case "b":
                 transliteratedLetter = "-ভ"
-            }
-            if lastLetter == "k" {
+            case "d":
+                transliteratedLetter = "-ধ"
+            case "k":
                 transliteratedLetter = "-খ"
-            }
-            if lastLetter == "D" {
+            case "g":
+                transliteratedLetter = "-ঘ"
+            case "j":
+                transliteratedLetter = "-ঝ"
+            case "p":
+                transliteratedLetter = "-ফ"
+            case "s":
+                transliteratedLetter = "-"
+            case "t":
+                transliteratedLetter = "-থ"
+            case "D":
                 transliteratedLetter = "-ঢ"
-            }
-            if lastLetter == "T" {
+            case "T":
                 transliteratedLetter = "-ঠ"
+            default:
+                print("Do nothing")
             }
         }
         lastLetter = s
