@@ -290,7 +290,8 @@ static NSString *kShift = @"⬆︎";
 }
 
 - (void)didSpace:(UIButton *)button {
-    [_delegate.textDocumentProxy insertText:@" "];
+    NSString *s = [self transform:@" "];
+    [_delegate.textDocumentProxy insertText:s];
     if (_delegate.shouldResetInsertionPoint) {
         [_delegate.textDocumentProxy adjustTextPositionByCharacterOffset: -1];
     }
