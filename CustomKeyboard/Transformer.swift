@@ -63,7 +63,7 @@ class Transformer {
         "W" : "",
         "X" : "",
         "Y" : "",
-        "Z" : "",
+        "Z" : "য়",
     ]
 
     var typedLetters = ""
@@ -101,11 +101,13 @@ class Transformer {
             case "p":
                 transliteratedLetter = "-ফ"
             case "s":
-                transliteratedLetter = "-"
+                transliteratedLetter = "-শ"
             case "t":
                 transliteratedLetter = "-থ"
             case "D":
                 transliteratedLetter = "-ঢ"
+            case "S":
+                transliteratedLetter = "-ষ"
             case "T":
                 transliteratedLetter = "-ঠ"
             default:
