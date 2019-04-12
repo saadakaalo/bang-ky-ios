@@ -30,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol KeyboardLettersDelegate<NSObject>
 @property(nonatomic, readonly) id <UITextDocumentProxy> textDocumentProxy;
+// TODO: Remove this label, also remove from the delegate methods if it is unnecessarry
 @property(nonatomic, readonly) NSString *returnLabel;
 @property(nonatomic, readonly) BOOL shouldResetInsertionPoint;
 

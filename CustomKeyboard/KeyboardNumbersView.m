@@ -82,7 +82,7 @@ enum {
                     [button addTarget:self action:@selector(didSpace:) forControlEvents:UIControlEventTouchUpInside];
                     break;
                 case kIndexReturn:
-                    [button setTitle:_delegate.returnLabel forState:UIControlStateNormal];
+                    [button setTitle:@"return" forState:UIControlStateNormal];
                     [button addTarget:self action:@selector(didReturn:) forControlEvents:UIControlEventTouchUpInside];
                     break;
                 case kIndexKeyboard:

@@ -64,6 +64,18 @@ class Transformer {
         "X" : "",
         "Y" : "",
         "Z" : "য়",
+        "bh" : "ভ",
+        "dh" : "ধ",
+        "kh" : "খ",
+        "gh" : "ঘ",
+        "jh" : "ঝ",
+        "ph" : "ফ",
+        "sh" : "শ",
+        "th" : "থ",
+        "Dh" : "ঢ",
+        "Sh" : "ষ",
+        "Th" : "ঠ",
+        "rri" : "ৃ",
     ]
 
     var typedLetters = ""
