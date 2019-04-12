@@ -62,7 +62,24 @@ class KeyboardViewController: UIInputViewController, KeyboardLettersDelegate, Ke
 
     func transform(_ s: String) -> String {
         let sharedTransformer = Transformer.shared
-        return sharedTransformer.transform(s)
+        var transformedLetter = sharedTransformer.transform(s)
+
+        let shouldBackSpace = transformedLetter.contains("-")
+        if shouldBackSpace {
+            textDocumentProxy.deleteBackward()
+            transformedLetter = transformedLetter.filter { (aChar) -> Bool in
+                if aChar == "-" {
+                    return false
+                }
+                return true
+            }
+        }
+
+        return transformedLetter
+    }
+
+    func clearBufferWord() {
+
     }
 
     func didLetters(_ button: UIButton) {

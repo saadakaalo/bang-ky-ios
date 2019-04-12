@@ -66,14 +66,49 @@ class Transformer {
         "Z" : "",
     ]
 
+    var typedLetters = ""
+    var lastLetter = ""
+
     private init() {
         // Private initialization to ensure just one instance is created.
     }
 
     func transform(_ s: String) -> String {
-        guard let transliteratedLetter = transliterationDict[s] else {
-            return "X"
+        if s == " " {
+            typedLetters = ""
+        } else {
+            typedLetters += s
         }
+
+        guard var transliteratedLetter = transliterationDict[s] else {
+            lastLetter = s
+            return s
+        }
+
+        if s == "h" {
+            if lastLetter == "d" {
+                transliteratedLetter = "-ধ"
+            }
+            if lastLetter == "t" {
+                transliteratedLetter = "-থ"
+            }
+            if lastLetter == "p" {
+                transliteratedLetter = "-ফ"
+            }
+            if lastLetter == "b" {
+                transliteratedLetter = "-ভ"
+            }
+            if lastLetter == "k" {
+                transliteratedLetter = "-খ"
+            }
+            if lastLetter == "D" {
+                transliteratedLetter = "-ঢ"
+            }
+            if lastLetter == "T" {
+                transliteratedLetter = "-ঠ"
+            }
+        }
+        lastLetter = s
         return transliteratedLetter
     }
 }
