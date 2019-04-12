@@ -88,45 +88,70 @@ class Transformer {
     func transform(_ s: String) -> String {
         if s == " " {
             typedLetters = ""
+            return s
         } else {
             typedLetters += s
+            return tranliterateWord(typedLetters)
         }
 
-        guard var transliteratedLetter = transliterationDict[s] else {
-            lastLetter = s
-            return s
+//        guard var transliteratedLetter = transliterationDict[s] else {
+//            lastLetter = s
+//            return s
+//        }
+//
+//        if s == "h" {
+//
+//            switch lastLetter {
+//            case "b":
+//                transliteratedLetter = "-ভ"
+//            case "d":
+//                transliteratedLetter = "-ধ"
+//            case "k":
+//                transliteratedLetter = "-খ"
+//            case "g":
+//                transliteratedLetter = "-ঘ"
+//            case "j":
+//                transliteratedLetter = "-ঝ"
+//            case "p":
+//                transliteratedLetter = "-ফ"
+//            case "s":
+//                transliteratedLetter = "-শ"
+//            case "t":
+//                transliteratedLetter = "-থ"
+//            case "D":
+//                transliteratedLetter = "-ঢ"
+//            case "S":
+//                transliteratedLetter = "-ষ"
+//            case "T":
+//                transliteratedLetter = "-ঠ"
+//            default:
+//                print("Do nothing")
+//            }
+//        }
+//        lastLetter = s
+//        return transliteratedLetter
+    }
+
+    func tranliterateWord(_ word: String) -> String {
+        var mutableWord = word
+
+        let keys = transliterationDict.keys.sorted { (fistString, secondString) -> Bool in
+            if fistString.count != secondString.count {
+                return fistString.count > secondString.count
+            }
+            return fistString > secondString
         }
 
-        if s == "h" {
+        print(keys)
 
-            switch lastLetter {
-            case "b":
-                transliteratedLetter = "-ভ"
-            case "d":
-                transliteratedLetter = "-ধ"
-            case "k":
-                transliteratedLetter = "-খ"
-            case "g":
-                transliteratedLetter = "-ঘ"
-            case "j":
-                transliteratedLetter = "-ঝ"
-            case "p":
-                transliteratedLetter = "-ফ"
-            case "s":
-                transliteratedLetter = "-শ"
-            case "t":
-                transliteratedLetter = "-থ"
-            case "D":
-                transliteratedLetter = "-ঢ"
-            case "S":
-                transliteratedLetter = "-ষ"
-            case "T":
-                transliteratedLetter = "-ঠ"
-            default:
-                print("Do nothing")
+        for key in keys {
+            if let value = transliterationDict[key] {
+                mutableWord = mutableWord.replacingOccurrences(of: key, with: value)
+                //            print(key, mutableWord)
             }
         }
-        lastLetter = s
-        return transliteratedLetter
+
+        return mutableWord
     }
+
 }
