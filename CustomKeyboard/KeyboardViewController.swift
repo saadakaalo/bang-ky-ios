@@ -64,15 +64,9 @@ class KeyboardViewController: UIInputViewController, KeyboardLettersDelegate, Ke
         let sharedTransformer = Transformer.shared
         var transformedLetter = sharedTransformer.transform(s)
 
-        let shouldBackSpace = transformedLetter.contains("-")
-        if shouldBackSpace {
+        while transformedLetter.starts(with: "-") {
             textDocumentProxy.deleteBackward()
-            transformedLetter = transformedLetter.filter { (aChar) -> Bool in
-                if aChar == "-" {
-                    return false
-                }
-                return true
-            }
+            transformedLetter.remove(at: transformedLetter.startIndex)
         }
 
         return transformedLetter
