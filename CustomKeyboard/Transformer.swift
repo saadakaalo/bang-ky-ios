@@ -79,7 +79,7 @@ class Transformer {
     ]
 
     var typedLetters = ""
-    var previousLength = 0
+    var lastNumberOfBngAlphabets = 0
 
     private init() {
         // Private initialization to ensure just one instance is created.
@@ -88,18 +88,30 @@ class Transformer {
     func transform(_ s: String) -> String {
         if s == " " {
             typedLetters = ""
-            previousLength = 0
+            lastNumberOfBngAlphabets = 0
             return s
+        } else if s == "-" {
+            typedLetters.removeLast()
+            lastNumberOfBngAlphabets = lastNumberOfBngAlphabets>0 ? lastNumberOfBngAlphabets-1 : 0
+            return "-"
         } else {
             typedLetters += s
-            let tsWord = tranliterateWord(typedLetters)
-            let wordToReturn = String(repeating: "-", count: previousLength) + tsWord
-            previousLength = tsWord.count
+            let (tsWord, nLetters) = tranliterateWord(typedLetters)
+            let wordToReturn = String(repeating: "-", count: lastNumberOfBngAlphabets) + tsWord
+            lastNumberOfBngAlphabets = nLetters
             return wordToReturn
         }
     }
+//
+//    func clearBuffer() {
+//
+//    }
+//
+//    func deleteLast() {
+//
+//    }
 
-    func tranliterateWord(_ word: String) -> String  {
+    func tranliterateWord(_ word: String) -> (String, Int)  {
         var mutableWord = word
         var tranliteratedWord = ""
         
@@ -110,6 +122,7 @@ class Transformer {
             return fistString > secondString
         }
         
+        var nLettersAdded = 0
         while mutableWord.count > 0 {
             var isAnyKeyMatched = false
             for key in sortedKeys {
@@ -127,8 +140,11 @@ class Transformer {
                 tranliteratedWord += String(mutableWord.prefix(1))
                 mutableWord.removeFirst(1)
             }
+            
+            nLettersAdded += 1
         }
-        return tranliteratedWord
+//        lastNumberOfBngAlphabets = nLettersAdded
+        return (tranliteratedWord, nLettersAdded)
     }
 
 }

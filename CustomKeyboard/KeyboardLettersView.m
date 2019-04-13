@@ -270,11 +270,13 @@ static NSString *kShift = @"⬆︎";
 }
 
 - (void)didBackspace:(UIButton *)button {
-    if (_delegate.shouldResetInsertionPoint) {
-        [_delegate.textDocumentProxy adjustTextPositionByCharacterOffset: 1];
-    }
-    [_delegate.textDocumentProxy deleteBackward];
-    [self updateReturn];
+//    if (_delegate.shouldResetInsertionPoint) {
+//        [_delegate.textDocumentProxy adjustTextPositionByCharacterOffset: 1];
+//    }
+//    [_delegate.textDocumentProxy deleteBackward];
+//    [self updateReturn];
+    NSString *s = [self transform:@"-"];
+    [_delegate.textDocumentProxy insertText:s];
 }
 
 - (void)didNumbers:(UIButton *)button {
