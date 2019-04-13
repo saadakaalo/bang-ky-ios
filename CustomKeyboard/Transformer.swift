@@ -79,7 +79,6 @@ class Transformer {
     ]
 
     var typedLetters = ""
-    var lastLetter = ""
 
     private init() {
         // Private initialization to ensure just one instance is created.
@@ -93,65 +92,40 @@ class Transformer {
             typedLetters += s
             return tranliterateWord(typedLetters)
         }
-
-//        guard var transliteratedLetter = transliterationDict[s] else {
-//            lastLetter = s
-//            return s
-//        }
-//
-//        if s == "h" {
-//
-//            switch lastLetter {
-//            case "b":
-//                transliteratedLetter = "-ভ"
-//            case "d":
-//                transliteratedLetter = "-ধ"
-//            case "k":
-//                transliteratedLetter = "-খ"
-//            case "g":
-//                transliteratedLetter = "-ঘ"
-//            case "j":
-//                transliteratedLetter = "-ঝ"
-//            case "p":
-//                transliteratedLetter = "-ফ"
-//            case "s":
-//                transliteratedLetter = "-শ"
-//            case "t":
-//                transliteratedLetter = "-থ"
-//            case "D":
-//                transliteratedLetter = "-ঢ"
-//            case "S":
-//                transliteratedLetter = "-ষ"
-//            case "T":
-//                transliteratedLetter = "-ঠ"
-//            default:
-//                print("Do nothing")
-//            }
-//        }
-//        lastLetter = s
-//        return transliteratedLetter
     }
 
-    func tranliterateWord(_ word: String) -> String {
+    func tranliterateWord(_ word: String) -> String  {
         var mutableWord = word
-
-        let keys = transliterationDict.keys.sorted { (fistString, secondString) -> Bool in
+        var tranliteratedWord = ""
+        
+        let sortedKeys = transliterationDict.keys.sorted { (fistString, secondString) -> Bool in
             if fistString.count != secondString.count {
                 return fistString.count > secondString.count
             }
             return fistString > secondString
         }
-
-        print(keys)
-
-        for key in keys {
-            if let value = transliterationDict[key] {
-                mutableWord = mutableWord.replacingOccurrences(of: key, with: value)
-                //            print(key, mutableWord)
+        
+        while mutableWord.count > 0 {
+            var isAnyKeyMatched = false
+            for key in sortedKeys {
+                guard let value = transliterationDict[key] else {
+                    fatalError("Something is not right.")
+                }
+                if mutableWord.starts(with: key) {
+                    isAnyKeyMatched = true
+                    tranliteratedWord += value
+                    mutableWord.removeFirst(key.count)
+                    break
+                }
+            }
+            if isAnyKeyMatched == false {
+                tranliteratedWord += String(mutableWord.prefix(1))
+                mutableWord.removeFirst(1)
             }
         }
-
-        return mutableWord
+        return tranliteratedWord
     }
 
 }
+
+
