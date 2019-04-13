@@ -91,9 +91,14 @@ class Transformer {
             lastNumberOfBngAlphabets = 0
             return s
         } else if s == "-" {
+            if typedLetters.count < 1 {
+                return "-"
+            }
             typedLetters.removeLast()
-            lastNumberOfBngAlphabets = lastNumberOfBngAlphabets>0 ? lastNumberOfBngAlphabets-1 : 0
-            return "-"
+            let (tsWord, nLetters) = tranliterateWord(typedLetters)
+            let wordToReturn = String(repeating: "-", count: lastNumberOfBngAlphabets) + tsWord
+            lastNumberOfBngAlphabets = nLetters
+            return wordToReturn
         } else {
             typedLetters += s
             let (tsWord, nLetters) = tranliterateWord(typedLetters)
@@ -133,17 +138,16 @@ class Transformer {
                     isAnyKeyMatched = true
                     tranliteratedWord += value
                     mutableWord.removeFirst(key.count)
+                    nLettersAdded += value.count
                     break
                 }
             }
             if isAnyKeyMatched == false {
                 tranliteratedWord += String(mutableWord.prefix(1))
                 mutableWord.removeFirst(1)
+                nLettersAdded += 1
             }
-            
-            nLettersAdded += 1
         }
-//        lastNumberOfBngAlphabets = nLettersAdded
         return (tranliteratedWord, nLettersAdded)
     }
 
