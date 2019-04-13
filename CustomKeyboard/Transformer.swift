@@ -65,6 +65,7 @@ class Transformer {
         "Y" : "",
         "Z" : "য়",
         "bh" : "ভ",
+        "ch" : "ছ",
         "dh" : "ধ",
         "kh" : "খ",
         "gh" : "ঘ",
