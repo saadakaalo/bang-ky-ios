@@ -107,6 +107,7 @@ static NSString *kShift = @"⬆︎";
         }
         _keys = keys;
         [self updateKeyboardAppearance];
+        [self setBoardState:kBoardStateLowercase];
     }
     return self;
 }
