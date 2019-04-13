@@ -79,6 +79,7 @@ class Transformer {
     ]
 
     var typedLetters = ""
+    var previousLength = 0
 
     private init() {
         // Private initialization to ensure just one instance is created.
@@ -87,10 +88,14 @@ class Transformer {
     func transform(_ s: String) -> String {
         if s == " " {
             typedLetters = ""
+            previousLength = 0
             return s
         } else {
             typedLetters += s
-            return tranliterateWord(typedLetters)
+            let tsWord = tranliterateWord(typedLetters)
+            let wordToReturn = String(repeating: "-", count: previousLength) + tsWord
+            previousLength = tsWord.count
+            return wordToReturn
         }
     }
 
