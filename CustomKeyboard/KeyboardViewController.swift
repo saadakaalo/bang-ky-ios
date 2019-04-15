@@ -57,13 +57,6 @@ class KeyboardViewController: UIInputViewController, KeyboardLettersDelegate, Ke
 
     // MARK: KeyboardLettersDelegate and KeyboardNumbersDelegate methods
 
-    var returnLabel: String = ""
-    var shouldResetInsertionPoint: Bool = false
-
-    func clearBufferWord() {
-
-    }
-
     func didLetters(_ button: UIButton) {
         lettersView.isHidden = false
         numbersView.isHidden = true

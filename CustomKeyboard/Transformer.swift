@@ -108,14 +108,6 @@ class Transformer {
             return wordToReturn
         }
     }
-//
-//    func clearBuffer() {
-//
-//    }
-//
-//    func deleteLast() {
-//
-//    }
 
     func tranliterateWord(_ word: String) -> (String, Int)  {
         var mutableWord = word

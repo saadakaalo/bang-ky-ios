@@ -197,7 +197,6 @@ static NSString *kShift = @"⬆︎";
                 [button removeTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
                 [button addTarget:self action:@selector(advanceToNextInputMode) forControlEvents:UIControlEventTouchUpInside];
             }
-            [self updateReturn];
         }
     }
 }
@@ -209,7 +208,6 @@ static NSString *kShift = @"⬆︎";
     if (kBoardStateUppercase == _boardState) {
         [self setBoardState:kBoardStateLowercase];
     }
-    [self updateReturn];
 }
 
 - (void)didShift:(UIButton *)button {
@@ -254,11 +252,6 @@ static NSString *kShift = @"⬆︎";
     }
 }
 
-- (void)updateReturn {
-    UIButton *button = _keys[kIndexReturn];
-    [button setEnabled:_delegate.textDocumentProxy.hasText];
-}
-
 - (void)didBackspace:(UIButton *)button {
     [_delegate didTapOnKeyboardKey:@"-"];
 }
@@ -277,16 +270,10 @@ static NSString *kShift = @"⬆︎";
 
 - (void)didSpace:(UIButton *)button {
     [_delegate didTapOnKeyboardKey:@" "];
-    [self updateReturn];
 }
 
 - (void)didReturn:(UIButton *)button {
-    [_delegate.textDocumentProxy insertText:@"\n"];
-}
-
-- (void)didChangeReturnKeyName {
-    UIButton *button = _keys[kIndexReturn];
-    [button setTitle:_delegate.returnLabel forState:UIControlStateNormal];
+    [_delegate didTapOnKeyboardKey:@"\n"];
 }
 
 - (void)setKeyboardAppearance:(UIKeyboardAppearance)keyboardAppearance {

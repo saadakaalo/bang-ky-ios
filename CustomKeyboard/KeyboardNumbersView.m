@@ -188,26 +188,13 @@ enum {
                 [button removeTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
                 [button addTarget:self action:@selector(advanceToNextInputMode) forControlEvents:UIControlEventTouchUpInside];
             }
-            [self updateReturn];
         }
     }
-}
-
-- (void)updateReturn {
-    UIButton *button = _keys[kIndexReturn];
-    [button setEnabled:_delegate.textDocumentProxy.hasText];
-}
-
-- (void)didChangeReturnKeyName {
-    UIButton *button = _keys[kIndexReturn];
-    [button setTitle:_delegate.returnLabel forState:UIControlStateNormal];
 }
 
 - (void)didTap:(UIButton *)button {
     NSString *s = [[button titleLabel] text];
     [_delegate didTapOnKeyboardKey:s];
-
-    [self updateReturn];
 }
 
 - (void)didShift:(UIButton *)button {
@@ -219,11 +206,7 @@ enum {
 }
 
 - (void)didBackspace:(UIButton *)button {
-    if (_delegate.shouldResetInsertionPoint) {
-        [_delegate.textDocumentProxy adjustTextPositionByCharacterOffset: 1];
-    }
-    [_delegate.textDocumentProxy deleteBackward];
-    [self updateReturn];
+    [_delegate didTapOnKeyboardKey:@"-"];
 }
 
 - (void)didLetters:(UIButton *)button {
@@ -239,15 +222,11 @@ enum {
 }
 
 - (void)didSpace:(UIButton *)button {
-    [_delegate.textDocumentProxy insertText:@" "];
-    if (_delegate.shouldResetInsertionPoint) {
-        [_delegate.textDocumentProxy adjustTextPositionByCharacterOffset: -1];
-    }
-    [self updateReturn];
+    [_delegate didTapOnKeyboardKey:@" "];
 }
 
 - (void)didReturn:(UIButton *)button {
-    [_delegate.textDocumentProxy insertText:@"\n"];
+    [_delegate didTapOnKeyboardKey:@"\n"];
 }
 
 - (void)setKeyboardAppearance:(UIKeyboardAppearance)keyboardAppearance {
