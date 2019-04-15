@@ -38,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)didNumbers:(UIButton *)button;
 
-- (NSString *)transform:(NSString *)s;
+- (void)didTapOnKeyboardKey:(NSString *)keyValue;
 
 @optional
 - (void)handleInputModeListFromView:(UIView *)view withEvent:(UIEvent *)event;

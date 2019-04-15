@@ -61,15 +61,16 @@ class KeyboardViewController: UIInputViewController, KeyboardLettersDelegate, Ke
     var shouldResetInsertionPoint: Bool = false
 
     func transform(_ s: String) -> String {
-        let sharedTransformer = Transformer.shared
-        var transformedLetter = sharedTransformer.transform(s)
-
-        while transformedLetter.starts(with: "-") {
-            textDocumentProxy.deleteBackward()
-            transformedLetter.remove(at: transformedLetter.startIndex)
-        }
-
-        return transformedLetter
+//        let sharedTransformer = Transformer.shared
+//        var transformedLetter = sharedTransformer.transform(s)
+//
+//        while transformedLetter.starts(with: "-") {
+//            textDocumentProxy.deleteBackward()
+//            transformedLetter.remove(at: transformedLetter.startIndex)
+//        }
+//
+//        return transformedLetter
+        return "$"
     }
 
     func clearBufferWord() {
@@ -84,5 +85,17 @@ class KeyboardViewController: UIInputViewController, KeyboardLettersDelegate, Ke
     func didNumbers(_ button: UIButton) {
         lettersView.isHidden = true
         numbersView.isHidden = false
+    }
+
+    func didTap(onKeyboardKey keyValue: String) {
+        let sharedTransformer = Transformer.shared
+        var transformedWord = sharedTransformer.transform(keyValue)
+
+        while transformedWord.starts(with: "-") {
+            textDocumentProxy.deleteBackward()
+            transformedWord.remove(at: transformedWord.startIndex)
+        }
+
+        textDocumentProxy.insertText(transformedWord)
     }
 }

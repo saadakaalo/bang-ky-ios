@@ -204,11 +204,8 @@ static NSString *kShift = @"⬆︎";
 
 - (void)didTap:(UIButton *)button {
     NSString *s = [[button titleLabel] text];
-    s = [self transform:s];
-    [_delegate.textDocumentProxy insertText:s];
-    if (_delegate.shouldResetInsertionPoint) {
-        [_delegate.textDocumentProxy adjustTextPositionByCharacterOffset: - [s length]];
-    }
+    [_delegate didTapOnKeyboardKey:s];
+
     if (kBoardStateUppercase == _boardState) {
         [self setBoardState:kBoardStateLowercase];
     }
@@ -262,22 +259,16 @@ static NSString *kShift = @"⬆︎";
     [button setEnabled:_delegate.textDocumentProxy.hasText];
 }
 
-- (NSString *)transform:(NSString *)s {
-    if (_delegate) {
-        return [_delegate transform:s];
-    } else {
-        return s;
-    }
-}
+//- (NSString *)transform:(NSString *)s {
+//    if (_delegate) {
+//        return [_delegate transform:s];
+//    } else {
+//        return s;
+//    }
+//}
 
 - (void)didBackspace:(UIButton *)button {
-//    if (_delegate.shouldResetInsertionPoint) {
-//        [_delegate.textDocumentProxy adjustTextPositionByCharacterOffset: 1];
-//    }
-//    [_delegate.textDocumentProxy deleteBackward];
-//    [self updateReturn];
-    NSString *s = [self transform:@"-"];
-    [_delegate.textDocumentProxy insertText:s];
+    [_delegate didTapOnKeyboardKey:@"-"];
 }
 
 - (void)didNumbers:(UIButton *)button {
@@ -293,11 +284,7 @@ static NSString *kShift = @"⬆︎";
 }
 
 - (void)didSpace:(UIButton *)button {
-    NSString *s = [self transform:@" "];
-    [_delegate.textDocumentProxy insertText:s];
-    if (_delegate.shouldResetInsertionPoint) {
-        [_delegate.textDocumentProxy adjustTextPositionByCharacterOffset: -1];
-    }
+    [_delegate didTapOnKeyboardKey:@" "];
     [self updateReturn];
 }
 
