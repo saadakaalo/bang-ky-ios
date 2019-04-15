@@ -198,14 +198,6 @@ enum {
     [button setEnabled:_delegate.textDocumentProxy.hasText];
 }
 
-//- (NSString *)transform:(NSString *)s {
-//    if (_delegate) {
-//        return [_delegate transform:s];
-//    } else {
-//        return s;
-//    }
-//}
-
 - (void)didChangeReturnKeyName {
     UIButton *button = _keys[kIndexReturn];
     [button setTitle:_delegate.returnLabel forState:UIControlStateNormal];

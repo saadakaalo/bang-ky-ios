@@ -259,14 +259,6 @@ static NSString *kShift = @"⬆︎";
     [button setEnabled:_delegate.textDocumentProxy.hasText];
 }
 
-//- (NSString *)transform:(NSString *)s {
-//    if (_delegate) {
-//        return [_delegate transform:s];
-//    } else {
-//        return s;
-//    }
-//}
-
 - (void)didBackspace:(UIButton *)button {
     [_delegate didTapOnKeyboardKey:@"-"];
 }

@@ -37,8 +37,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)didLetters:(UIButton *)button;
 
-- (NSString *)transform:(NSString *)s;
-
 - (void)didTapOnKeyboardKey:(NSString *)keyValue;
 
 @optional

@@ -60,19 +60,6 @@ class KeyboardViewController: UIInputViewController, KeyboardLettersDelegate, Ke
     var returnLabel: String = ""
     var shouldResetInsertionPoint: Bool = false
 
-    func transform(_ s: String) -> String {
-//        let sharedTransformer = Transformer.shared
-//        var transformedLetter = sharedTransformer.transform(s)
-//
-//        while transformedLetter.starts(with: "-") {
-//            textDocumentProxy.deleteBackward()
-//            transformedLetter.remove(at: transformedLetter.startIndex)
-//        }
-//
-//        return transformedLetter
-        return "$"
-    }
-
     func clearBufferWord() {
 
     }
