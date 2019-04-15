@@ -198,13 +198,13 @@ enum {
     [button setEnabled:_delegate.textDocumentProxy.hasText];
 }
 
-- (NSString *)transform:(NSString *)s {
-    if (_delegate) {
-        return [_delegate transform:s];
-    } else {
-        return s;
-    }
-}
+//- (NSString *)transform:(NSString *)s {
+//    if (_delegate) {
+//        return [_delegate transform:s];
+//    } else {
+//        return s;
+//    }
+//}
 
 - (void)didChangeReturnKeyName {
     UIButton *button = _keys[kIndexReturn];
@@ -213,11 +213,8 @@ enum {
 
 - (void)didTap:(UIButton *)button {
     NSString *s = [[button titleLabel] text];
-    s = [self transform:s];
-    [_delegate.textDocumentProxy insertText:s];
-    if (_delegate.shouldResetInsertionPoint) {
-        [_delegate.textDocumentProxy adjustTextPositionByCharacterOffset: - [s length]];
-    }
+    [_delegate didTapOnKeyboardKey:s];
+
     [self updateReturn];
 }
 
