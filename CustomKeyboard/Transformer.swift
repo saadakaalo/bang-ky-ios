@@ -79,6 +79,24 @@ class Transformer {
         "rri" : "ৃ",
     ]
 
+    let shorbornoToKars = [
+        "অ" : "",
+        "আ" : "",
+        "ই" : "",
+        "ঈ" : "",
+        "এ" : "",
+        "ও" : "",
+        "অ" : "",
+        "অ" : "",
+        "অ" : "",
+        "অ" : "",
+        "অ" : "",
+        "অ" : "",
+        "অ" : "",
+        "অ" : "",
+        "অ" : "",
+    ]
+
     var typedLetters = ""
     var lastNumberOfBngAlphabets = 0
 
@@ -124,9 +142,9 @@ class Transformer {
         while mutableWord.count > 0 {
             var isAnyKeyMatched = false
             for key in sortedKeys {
-                guard let value = transliterationDict[key] else {
-                    fatalError("Something is not right.")
-                }
+                /// The value should always be there, so forced unwrapped
+                let value = transliterationDict[key]!
+
                 if mutableWord.starts(with: key) {
                     isAnyKeyMatched = true
                     tranliteratedWord += value
