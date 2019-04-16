@@ -46,7 +46,7 @@ class Transformer {
         "F" : "ফ",
         "G" : "ঘ",
         "H" : "ঃ",
-        "I" : "ই",
+        "I" : "ঈ",
         "J" : "ঝ",
         "K" : "খ",
         "L" : "",
@@ -76,6 +76,7 @@ class Transformer {
         "Dh" : "ঢ",
         "Sh" : "ষ",
         "Th" : "ঠ",
+        "oo" : "উ",
         "rri" : "ৃ",
     ]
 
@@ -87,6 +88,7 @@ class Transformer {
         "এ" : "ে",
         "ও" : "ো",
         "উ" : "ু",
+        "ঊ" : "ূ",
 //        "অ" : "",
 //        "অ" : "",
 //        "অ" : "",
@@ -99,6 +101,7 @@ class Transformer {
 
     var typedLetters = ""
     var lastNumberOfBngAlphabets = 0
+    var shouldConsiderNextShorbornoAsKar = false
 
     private init() {
         // Private initialization to ensure just one instance is created.
@@ -108,6 +111,7 @@ class Transformer {
         if s == " " {
             typedLetters = ""
             lastNumberOfBngAlphabets = 0
+            shouldConsiderNextShorbornoAsKar = false
             return s
         } else if s == "-" {
             if typedLetters.count < 1 {
@@ -149,7 +153,7 @@ class Transformer {
                     isAnyKeyMatched = true
 
                     /// Add kar instead of borno when the shorborno is in middle of a word
-                    if tranliteratedWord.count > 0, let kar = shorbornoToKars[borno] {
+                    if shouldConsiderNextShorbornoAsKar, let kar = shorbornoToKars[borno] {
                         tranliteratedWord += kar
                         mutableWord.removeFirst(key.count)
                         nLettersAdded += kar.count
@@ -158,6 +162,14 @@ class Transformer {
                         mutableWord.removeFirst(key.count)
                         nLettersAdded += borno.count
                     }
+
+                    let isShorborno = shorbornoToKars[borno] != nil
+                    if isShorborno {
+                        shouldConsiderNextShorbornoAsKar = false
+                    } else {
+                        shouldConsiderNextShorbornoAsKar = true
+                    }
+
                     break
                 }
             }
