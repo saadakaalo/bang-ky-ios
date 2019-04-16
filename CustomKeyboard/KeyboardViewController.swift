@@ -80,6 +80,21 @@ class KeyboardViewController: UIInputViewController, KeyboardLettersDelegate, Ke
     func didTap(onKeyboardKey keyValue: String) {
         let sharedTransformer = Transformer.shared
         sharedTransformer.textDocumentProxy = self.textDocumentProxy
-        sharedTransformer.insertText(keyValue)
+        var outPut = ""
+        if keyValue == "-" {
+            if let textLength = textDocumentProxy.documentContextBeforeInput?.count {
+                outPut = String(textLength)
+            }
+            textDocumentProxy.deleteBackward()
+//            textDocumentProxy.deleteBackward()
+//            textDocumentProxy.deleteBackward()
+
+            if let textLength = textDocumentProxy.documentContextBeforeInput?.count {
+                outPut = outPut + "|" + String(textLength)
+            }
+            myLabel.text = outPut
+        } else {
+            sharedTransformer.insertText(keyValue)
+        }
     }
 }
