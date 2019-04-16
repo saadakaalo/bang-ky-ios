@@ -116,20 +116,23 @@ class Transformer {
             if typedLetters.count > 0 {
                 typedLetters.removeLast()
                 let tsWord = tranliterateWord(typedLetters)
-                deleteLastWord()
+                clearBufferWord()
                 textDocumentProxy.insertText(tsWord)
             } else {
                 textDocumentProxy.deleteBackward()
             }
         } else {
+            let shouldClearBufferWord = (typedLetters.count > 0)
             typedLetters += s
             let tsWord = tranliterateWord(typedLetters)
-            deleteLastWord()
+            if shouldClearBufferWord {
+                clearBufferWord()
+            }
             textDocumentProxy.insertText(tsWord)
         }
     }
 
-    func deleteLastWord() {
+    func clearBufferWord() {
         shouldConsiderNextShorbornoAsKar = false
         while true {
             guard let previousText = textDocumentProxy.documentContextBeforeInput else {
