@@ -12,37 +12,37 @@ class Transformer {
     static let shared = Transformer()
 
     let transliterationDict = [
-        "a" : "া",
+        "a" : "আ",
         "b" : "ব",
         "c" : "চ",
         "d" : "দ",
-        "e" : "ে",
+        "e" : "এ",
         "f" : "ফ",
         "g" : "গ",
         "h" : "হ",
-        "i" : "ি",
+        "i" : "ই",
         "j" : "জ",
         "k" : "ক",
         "l" : "ল",
         "m" : "ম",
         "n" : "ন",
-        "o" : "ো",
+        "o" : "অ",
         "p" : "প",
         "q" : "্",
         "r" : "র",
         "s" : "স",
         "t" : "ত",
-        "u" : "ু",
+        "u" : "উ",
         "v" : "ভ",
         "w" : "ঊ",
         "x" : "্স",
         "y" : "্য",
         "z" : "য",
-        "A" : "অ",
+        "A" : "আ",
         "B" : "ভ",
         "C" : "ছ",
         "D" : "ড",
-        "E" : "এ",
+        "E" : "ঐ",
         "F" : "ফ",
         "G" : "ঘ",
         "H" : "ঃ",
@@ -58,7 +58,7 @@ class Transformer {
         "R" : "ড়",
         "S" : "শ",
         "T" : "ট",
-        "U" : "উ",
+        "U" : "ঊ",
         "V" : "",
         "W" : "",
         "X" : "",
@@ -81,20 +81,20 @@ class Transformer {
 
     let shorbornoToKars = [
         "অ" : "",
-        "আ" : "",
-        "ই" : "",
-        "ঈ" : "",
-        "এ" : "",
-        "ও" : "",
-        "অ" : "",
-        "অ" : "",
-        "অ" : "",
-        "অ" : "",
-        "অ" : "",
-        "অ" : "",
-        "অ" : "",
-        "অ" : "",
-        "অ" : "",
+        "আ" : "া",
+        "ই" : "ি",
+        "ঈ" : "ী",
+        "এ" : "ে",
+        "ও" : "ো",
+        "উ" : "ু",
+//        "অ" : "",
+//        "অ" : "",
+//        "অ" : "",
+//        "অ" : "",
+//        "অ" : "",
+//        "অ" : "",
+//        "অ" : "",
+//        "অ" : "",
     ]
 
     var typedLetters = ""
@@ -143,13 +143,21 @@ class Transformer {
             var isAnyKeyMatched = false
             for key in sortedKeys {
                 /// The value should always be there, so forced unwrapped
-                let value = transliterationDict[key]!
+                let borno = transliterationDict[key]!
 
                 if mutableWord.starts(with: key) {
                     isAnyKeyMatched = true
-                    tranliteratedWord += value
-                    mutableWord.removeFirst(key.count)
-                    nLettersAdded += value.count
+
+                    /// Add kar instead of borno when the shorborno is in middle of a word
+                    if tranliteratedWord.count > 0, let kar = shorbornoToKars[borno] {
+                        tranliteratedWord += kar
+                        mutableWord.removeFirst(key.count)
+                        nLettersAdded += kar.count
+                    } else {
+                        tranliteratedWord += borno
+                        mutableWord.removeFirst(key.count)
+                        nLettersAdded += borno.count
+                    }
                     break
                 }
             }
