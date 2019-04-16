@@ -95,6 +95,7 @@ class Transformer {
     var lastNumberOfBngAlphabets = 0
     var shouldConsiderNextShorbornoAsKar = false
 
+    // TODO: It should not be implicit optional
     var textDocumentProxy: UITextDocumentProxy!
 
     private init() {
@@ -114,7 +115,7 @@ class Transformer {
 
             if typedLetters.count > 0 {
                 typedLetters.removeLast()
-                let (tsWord, nLetters) = tranliterateWord(typedLetters)
+                let tsWord = tranliterateWord(typedLetters)
                 deleteLastWord()
                 textDocumentProxy.insertText(tsWord)
             } else {
@@ -122,34 +123,9 @@ class Transformer {
             }
         } else {
             typedLetters += s
-            let (tsWord, nLetters) = tranliterateWord(typedLetters)
+            let tsWord = tranliterateWord(typedLetters)
             deleteLastWord()
             textDocumentProxy.insertText(tsWord)
-        }
-    }
-
-    func transform(_ s: String) -> String {
-        if s == " " {
-            typedLetters = ""
-            lastNumberOfBngAlphabets = 0
-            shouldConsiderNextShorbornoAsKar = false
-            return s
-        } else if s == "-" {
-            if typedLetters.count < 1 {
-                return "-"
-            }
-            typedLetters.removeLast()
-            let (tsWord, nLetters) = tranliterateWord(typedLetters)
-            let wordToReturn = "-" + tsWord
-            lastNumberOfBngAlphabets = nLetters
-            return wordToReturn
-        } else {
-            typedLetters += s
-            let (tsWord, nLetters) = tranliterateWord(typedLetters)
-            deleteLastWord()
-            let wordToReturn = tsWord
-            lastNumberOfBngAlphabets = nLetters
-            return wordToReturn
         }
     }
 
@@ -167,7 +143,7 @@ class Transformer {
         }
     }
 
-    func tranliterateWord(_ word: String) -> (String, Int)  {
+    func tranliterateWord(_ word: String) -> String  {
         var mutableWord = word
         var tranliteratedWord = ""
         
@@ -215,7 +191,7 @@ class Transformer {
                 nLettersAdded += 1
             }
         }
-        return (tranliteratedWord, nLettersAdded)
+        return tranliteratedWord
     }
 
 }
