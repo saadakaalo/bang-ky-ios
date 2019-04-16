@@ -47,7 +47,7 @@ class KeyboardViewController: UIInputViewController, KeyboardLettersDelegate, Ke
             numbersView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
 
-        myLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 20))
+        myLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 500, height: 20))
         myLabel.text = "No text yet"
         view.addSubview(myLabel)
         NSLayoutConstraint.activate([
@@ -79,17 +79,23 @@ class KeyboardViewController: UIInputViewController, KeyboardLettersDelegate, Ke
 
     func didTap(onKeyboardKey keyValue: String) {
         let sharedTransformer = Transformer.shared
+        sharedTransformer.textDocumentProxy = self.textDocumentProxy
         var transformedWord = sharedTransformer.transform(keyValue)
-
+//        print("Sourav 1:", transformedWord)
+        var output = transformedWord
         if transformedWord.starts(with: "-") {
-//            textDocumentProxy.deleteBackward()
-//            transformedWord.remove(at: transformedWord.startIndex)
+            textDocumentProxy.deleteBackward()
+            transformedWord.remove(at: transformedWord.startIndex)
+        } else if transformedWord.starts(with: "◀︎") {
             deleteLastWord()
             transformedWord.remove(at: transformedWord.startIndex)
         }
+//        print("Sourav 2:", transformedWord)
+        output = output + "|" + transformedWord
+        myLabel.text = output
 
         textDocumentProxy.insertText(transformedWord)
-        myLabel.text = textDocumentProxy.documentContextBeforeInput
+//        myLabel.text = textDocumentProxy.documentContextBeforeInput
     }
     func deleteLastWord() {
         while true {

@@ -95,6 +95,8 @@ class Transformer {
     var lastNumberOfBngAlphabets = 0
     var shouldConsiderNextShorbornoAsKar = false
 
+    var textDocumentProxy: UITextDocumentProxy!
+
     private init() {
         // Private initialization to ensure just one instance is created.
     }
@@ -111,17 +113,29 @@ class Transformer {
             }
             typedLetters.removeLast()
             let (tsWord, nLetters) = tranliterateWord(typedLetters)
-//            let wordToReturn = String(repeating: "-", count: lastNumberOfBngAlphabets) + tsWord
             let wordToReturn = "-" + tsWord
             lastNumberOfBngAlphabets = nLetters
             return wordToReturn
         } else {
             typedLetters += s
             let (tsWord, nLetters) = tranliterateWord(typedLetters)
-//            let wordToReturn = String(repeating: "-", count: lastNumberOfBngAlphabets) + tsWord
-            let wordToReturn = "-" + tsWord
+            deleteLastWord()
+            let wordToReturn = tsWord
             lastNumberOfBngAlphabets = nLetters
             return wordToReturn
+        }
+    }
+
+    func deleteLastWord() {
+        while true {
+            guard let previousText = textDocumentProxy.documentContextBeforeInput else {
+                break
+            }
+            if previousText.count == 0 || previousText.hasSuffix(" ") {
+                break
+            }
+
+            textDocumentProxy.deleteBackward()
         }
     }
 
