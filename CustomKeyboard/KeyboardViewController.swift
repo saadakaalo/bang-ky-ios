@@ -12,6 +12,7 @@ class KeyboardViewController: UIInputViewController, KeyboardLettersDelegate, Ke
 
     var lettersView: KeyboardLettersView!
     var numbersView: KeyboardNumbersView!
+    var myLabel: UILabel!
 
     override func updateViewConstraints() {
         super.updateViewConstraints()
@@ -45,6 +46,15 @@ class KeyboardViewController: UIInputViewController, KeyboardLettersDelegate, Ke
             numbersView.rightAnchor.constraint(equalTo: view.rightAnchor),
             numbersView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
+
+        myLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 20))
+        myLabel.text = "No text yet"
+        view.addSubview(myLabel)
+        NSLayoutConstraint.activate([
+            myLabel.leftAnchor.constraint(equalTo: view.leftAnchor),
+            myLabel.topAnchor.constraint(equalTo: view.topAnchor),
+            myLabel.rightAnchor.constraint(equalTo: view.rightAnchor),
+        ])
     }
     
     override func textWillChange(_ textInput: UITextInput?) {
@@ -71,11 +81,26 @@ class KeyboardViewController: UIInputViewController, KeyboardLettersDelegate, Ke
         let sharedTransformer = Transformer.shared
         var transformedWord = sharedTransformer.transform(keyValue)
 
-        while transformedWord.starts(with: "-") {
-            textDocumentProxy.deleteBackward()
+        if transformedWord.starts(with: "-") {
+//            textDocumentProxy.deleteBackward()
+//            transformedWord.remove(at: transformedWord.startIndex)
+            deleteLastWord()
             transformedWord.remove(at: transformedWord.startIndex)
         }
 
         textDocumentProxy.insertText(transformedWord)
+        myLabel.text = textDocumentProxy.documentContextBeforeInput
+    }
+    func deleteLastWord() {
+        while true {
+            guard let previousText = textDocumentProxy.documentContextBeforeInput else {
+                break
+            }
+            if previousText.count == 0 || previousText.hasSuffix(" ") {
+                break
+            }
+
+            textDocumentProxy.deleteBackward()
+        }
     }
 }

@@ -89,14 +89,6 @@ class Transformer {
         "ও" : "ো",
         "উ" : "ু",
         "ঊ" : "ূ",
-//        "অ" : "",
-//        "অ" : "",
-//        "অ" : "",
-//        "অ" : "",
-//        "অ" : "",
-//        "অ" : "",
-//        "অ" : "",
-//        "অ" : "",
     ]
 
     var typedLetters = ""
@@ -119,13 +111,15 @@ class Transformer {
             }
             typedLetters.removeLast()
             let (tsWord, nLetters) = tranliterateWord(typedLetters)
-            let wordToReturn = String(repeating: "-", count: lastNumberOfBngAlphabets) + tsWord
+//            let wordToReturn = String(repeating: "-", count: lastNumberOfBngAlphabets) + tsWord
+            let wordToReturn = "-" + tsWord
             lastNumberOfBngAlphabets = nLetters
             return wordToReturn
         } else {
             typedLetters += s
             let (tsWord, nLetters) = tranliterateWord(typedLetters)
-            let wordToReturn = String(repeating: "-", count: lastNumberOfBngAlphabets) + tsWord
+//            let wordToReturn = String(repeating: "-", count: lastNumberOfBngAlphabets) + tsWord
+            let wordToReturn = "-" + tsWord
             lastNumberOfBngAlphabets = nLetters
             return wordToReturn
         }
