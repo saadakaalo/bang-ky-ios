@@ -80,33 +80,6 @@ class KeyboardViewController: UIInputViewController, KeyboardLettersDelegate, Ke
     func didTap(onKeyboardKey keyValue: String) {
         let sharedTransformer = Transformer.shared
         sharedTransformer.textDocumentProxy = self.textDocumentProxy
-        var transformedWord = sharedTransformer.transform(keyValue)
-//        print("Sourav 1:", transformedWord)
-        var output = transformedWord
-        if transformedWord.starts(with: "-") {
-            textDocumentProxy.deleteBackward()
-            transformedWord.remove(at: transformedWord.startIndex)
-        } else if transformedWord.starts(with: "◀︎") {
-            deleteLastWord()
-            transformedWord.remove(at: transformedWord.startIndex)
-        }
-//        print("Sourav 2:", transformedWord)
-        output = output + "|" + transformedWord
-        myLabel.text = output
-
-        textDocumentProxy.insertText(transformedWord)
-//        myLabel.text = textDocumentProxy.documentContextBeforeInput
-    }
-    func deleteLastWord() {
-        while true {
-            guard let previousText = textDocumentProxy.documentContextBeforeInput else {
-                break
-            }
-            if previousText.count == 0 || previousText.hasSuffix(" ") {
-                break
-            }
-
-            textDocumentProxy.deleteBackward()
-        }
+        sharedTransformer.insertText(keyValue)
     }
 }

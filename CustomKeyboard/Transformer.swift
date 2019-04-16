@@ -101,6 +101,33 @@ class Transformer {
         // Private initialization to ensure just one instance is created.
     }
 
+    func insertText(_ s: String) {
+        if s == " " {
+            typedLetters = ""
+            lastNumberOfBngAlphabets = 0
+            shouldConsiderNextShorbornoAsKar = false
+            textDocumentProxy.insertText(s)
+        } else if s == "-" {
+            if let textLength = textDocumentProxy.documentContextBeforeInput?.count, textLength <= 0 {
+                return
+            }
+
+            if typedLetters.count > 0 {
+                typedLetters.removeLast()
+                let (tsWord, nLetters) = tranliterateWord(typedLetters)
+                deleteLastWord()
+                textDocumentProxy.insertText(tsWord)
+            } else {
+                textDocumentProxy.deleteBackward()
+            }
+        } else {
+            typedLetters += s
+            let (tsWord, nLetters) = tranliterateWord(typedLetters)
+            deleteLastWord()
+            textDocumentProxy.insertText(tsWord)
+        }
+    }
+
     func transform(_ s: String) -> String {
         if s == " " {
             typedLetters = ""
@@ -127,6 +154,7 @@ class Transformer {
     }
 
     func deleteLastWord() {
+        shouldConsiderNextShorbornoAsKar = false
         while true {
             guard let previousText = textDocumentProxy.documentContextBeforeInput else {
                 break
