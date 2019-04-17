@@ -92,10 +92,10 @@ class Transformer {
     ]
 
     var typedLetters = ""
-    var nBngAlphabetsInLastWord = 0
+    var nBngLettersInLastWord = 0
     var shouldConsiderNextShorbornoAsKar = false
 
-    // TODO: It should not be implicit optional
+    // TODO: This two property should not be implicit optional
     weak var textDocumentProxy: UITextDocumentProxy!
     weak var debugLabel: UILabel!
 
@@ -106,34 +106,38 @@ class Transformer {
     func insertText(_ text: String) {
         if text == " " {
             typedLetters = ""
-            nBngAlphabetsInLastWord = 0
+            nBngLettersInLastWord = 0
             shouldConsiderNextShorbornoAsKar = false
             textDocumentProxy.insertText(text)
         } else if text == "-" {
             if let textLength = textDocumentProxy.documentContextBeforeInput?.count, textLength <= 0 {
-                return
-            }
-
-            if typedLetters.count > 0 {
+                nBngLettersInLastWord = 0
+                //                return
+            } else if typedLetters.count > 0 {
                 typedLetters.removeLast()
-                let tsWord = tranliterateWord(typedLetters)
+                let (tsWord, nBngLetters) = tranliterateWord(typedLetters)
                 clearBufferWord()
                 textDocumentProxy.insertText(tsWord)
+                nBngLettersInLastWord = nBngLetters
             } else {
                 textDocumentProxy.deleteBackward()
+                nBngLettersInLastWord = 0
             }
         } else {
-            let shouldClearBufferWord = (typedLetters.count > 0)
             typedLetters += text
-            let tsWord = tranliterateWord(typedLetters)
-            if shouldClearBufferWord {
-                clearBufferWord()
-            }
+            let (tsWord, nBngLetters) = tranliterateWord(typedLetters)
+
+            clearBufferWord()
             textDocumentProxy.insertText(tsWord)
+            nBngLettersInLastWord = nBngLetters
         }
+        debugLabel.text = String(nBngLettersInLastWord)
     }
 
-    func clearBufferWord() {
+
+    //TODO: Delete this method, no more necessary
+    /// Delete the letters backword as long as there is no blank space
+    func clearBufferWordArchieved() {
         shouldConsiderNextShorbornoAsKar = false
         while true {
             guard let previousText = textDocumentProxy.documentContextBeforeInput else {
@@ -147,7 +151,13 @@ class Transformer {
         }
     }
 
-    func tranliterateWord(_ word: String) -> String  {
+    func clearBufferWord() {
+        for _ in 0..<nBngLettersInLastWord {
+            textDocumentProxy.deleteBackward()
+        }
+    }
+
+    func tranliterateWord(_ word: String) -> (String, Int)  {
         var mutableWord = word
         var tranliteratedWord = ""
         
@@ -158,7 +168,7 @@ class Transformer {
             return fistString > secondString
         }
         
-        var nLettersAdded = 0
+        var nBngLettersAdded = 0
         while mutableWord.count > 0 {
             var isAnyKeyMatched = false
             for key in sortedKeys {
@@ -172,11 +182,11 @@ class Transformer {
                     if shouldConsiderNextShorbornoAsKar, let kar = shorbornoToKars[borno] {
                         tranliteratedWord += kar
                         mutableWord.removeFirst(key.count)
-                        nLettersAdded += kar.count
+                        nBngLettersAdded += kar.count
                     } else {
                         tranliteratedWord += borno
                         mutableWord.removeFirst(key.count)
-                        nLettersAdded += borno.count
+                        nBngLettersAdded += borno.count
                     }
 
                     let isShorborno = shorbornoToKars[borno] != nil
@@ -192,10 +202,10 @@ class Transformer {
             if isAnyKeyMatched == false {
                 tranliteratedWord += String(mutableWord.prefix(1))
                 mutableWord.removeFirst(1)
-                nLettersAdded += 1
+                nBngLettersAdded += 1
             }
         }
-        return tranliteratedWord
+        return (tranliteratedWord, nBngLettersAdded)
     }
 
 }
