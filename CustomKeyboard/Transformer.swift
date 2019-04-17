@@ -92,24 +92,24 @@ class Transformer {
     ]
 
     var typedLetters = ""
-    var lastNumberOfBngAlphabets = 0
+    var nBngAlphabetsInLastWord = 0
     var shouldConsiderNextShorbornoAsKar = false
 
     // TODO: It should not be implicit optional
-    var textDocumentProxy: UITextDocumentProxy!
-    var debugLabel: UILabel!
+    weak var textDocumentProxy: UITextDocumentProxy!
+    weak var debugLabel: UILabel!
 
     private init() {
         // Private initialization to ensure just one instance is created.
     }
 
-    func insertText(_ s: String) {
-        if s == " " {
+    func insertText(_ text: String) {
+        if text == " " {
             typedLetters = ""
-            lastNumberOfBngAlphabets = 0
+            nBngAlphabetsInLastWord = 0
             shouldConsiderNextShorbornoAsKar = false
-            textDocumentProxy.insertText(s)
-        } else if s == "-" {
+            textDocumentProxy.insertText(text)
+        } else if text == "-" {
             if let textLength = textDocumentProxy.documentContextBeforeInput?.count, textLength <= 0 {
                 return
             }
@@ -124,7 +124,7 @@ class Transformer {
             }
         } else {
             let shouldClearBufferWord = (typedLetters.count > 0)
-            typedLetters += s
+            typedLetters += text
             let tsWord = tranliterateWord(typedLetters)
             if shouldClearBufferWord {
                 clearBufferWord()

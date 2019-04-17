@@ -79,6 +79,7 @@ class KeyboardViewController: UIInputViewController, KeyboardLettersDelegate, Ke
     }
 
     func didTap(onKeyboardKey keyValue: String) {
+        print("Sourav", keyValue)
         let sharedTransformer = Transformer.shared
         sharedTransformer.textDocumentProxy = self.textDocumentProxy
         sharedTransformer.debugLabel = debugLabel
