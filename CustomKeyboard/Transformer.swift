@@ -91,7 +91,7 @@ class Transformer {
         "ঊ" : "ূ",
     ]
 
-    var typedLetters = ""
+    var transletingBufferWordEng = ""
     var nBngLettersInLastWord = 0
 
     // TODO: This two property should not be implicit optional
@@ -104,26 +104,30 @@ class Transformer {
 
     func insertText(_ text: String) {
         if text == " " {
-            typedLetters = ""
+            transletingBufferWordEng = ""
             nBngLettersInLastWord = 0
             textDocumentProxy.insertText(text)
         } else if text == "-" {
+            /// When no text to delete backword
             if let textLength = textDocumentProxy.documentContextBeforeInput?.count, textLength <= 0 {
                 nBngLettersInLastWord = 0
-                //                return
-            } else if typedLetters.count > 0 {
-                typedLetters.removeLast()
-                let (tsWord, nBngLetters) = tranliterateWord(typedLetters)
+            }
+            /// When transletting Eng word is not empty
+            else if transletingBufferWordEng.count > 0 {
+                transletingBufferWordEng.removeLast()
+                let (tsWord, nBngLetters) = tranliterateWord(transletingBufferWordEng)
                 clearBufferWord()
                 textDocumentProxy.insertText(tsWord)
                 nBngLettersInLastWord = nBngLetters
-            } else {
+            }
+            /// When transletting Eng word is empty
+            else {
                 textDocumentProxy.deleteBackward()
                 nBngLettersInLastWord = 0
             }
         } else {
-            typedLetters += text
-            let (tsWord, nBngLetters) = tranliterateWord(typedLetters)
+            transletingBufferWordEng += text
+            let (tsWord, nBngLetters) = tranliterateWord(transletingBufferWordEng)
 
             clearBufferWord()
             textDocumentProxy.insertText(tsWord)
