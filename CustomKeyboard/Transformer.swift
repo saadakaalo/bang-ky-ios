@@ -93,7 +93,6 @@ class Transformer {
 
     var typedLetters = ""
     var nBngLettersInLastWord = 0
-    var shouldConsiderNextShorbornoAsKar = false
 
     // TODO: This two property should not be implicit optional
     weak var textDocumentProxy: UITextDocumentProxy!
@@ -107,7 +106,6 @@ class Transformer {
         if text == " " {
             typedLetters = ""
             nBngLettersInLastWord = 0
-            shouldConsiderNextShorbornoAsKar = false
             textDocumentProxy.insertText(text)
         } else if text == "-" {
             if let textLength = textDocumentProxy.documentContextBeforeInput?.count, textLength <= 0 {
@@ -138,7 +136,6 @@ class Transformer {
     //TODO: Delete this method, no more necessary
     /// Delete the letters backword as long as there is no blank space
     func clearBufferWordArchieved() {
-        shouldConsiderNextShorbornoAsKar = false
         while true {
             guard let previousText = textDocumentProxy.documentContextBeforeInput else {
                 break
@@ -158,6 +155,7 @@ class Transformer {
     }
 
     func tranliterateWord(_ word: String) -> (String, Int)  {
+        var shouldConsiderNextShorbornoAsKar = false
         var mutableWord = word
         var tranliteratedWord = ""
         
@@ -203,6 +201,7 @@ class Transformer {
                 tranliteratedWord += String(mutableWord.prefix(1))
                 mutableWord.removeFirst(1)
                 nBngLettersAdded += 1
+                shouldConsiderNextShorbornoAsKar = false
             }
         }
         return (tranliteratedWord, nBngLettersAdded)
