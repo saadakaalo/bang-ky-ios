@@ -97,6 +97,7 @@ class Transformer {
 
     // TODO: It should not be implicit optional
     var textDocumentProxy: UITextDocumentProxy!
+    var debugLabel: UILabel!
 
     private init() {
         // Private initialization to ensure just one instance is created.

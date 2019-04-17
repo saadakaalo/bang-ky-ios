@@ -12,7 +12,8 @@ class KeyboardViewController: UIInputViewController, KeyboardLettersDelegate, Ke
 
     var lettersView: KeyboardLettersView!
     var numbersView: KeyboardNumbersView!
-    var myLabel: UILabel!
+    // TODO: Remove this label
+    var debugLabel: UILabel!
 
     override func updateViewConstraints() {
         super.updateViewConstraints()
@@ -47,13 +48,13 @@ class KeyboardViewController: UIInputViewController, KeyboardLettersDelegate, Ke
             numbersView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
 
-        myLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 500, height: 20))
-        myLabel.text = "No text yet"
-        view.addSubview(myLabel)
+        debugLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 500, height: 20))
+        debugLabel.text = "No text yet"
+        view.addSubview(debugLabel)
         NSLayoutConstraint.activate([
-            myLabel.leftAnchor.constraint(equalTo: view.leftAnchor),
-            myLabel.topAnchor.constraint(equalTo: view.topAnchor),
-            myLabel.rightAnchor.constraint(equalTo: view.rightAnchor),
+            debugLabel.leftAnchor.constraint(equalTo: view.leftAnchor),
+            debugLabel.topAnchor.constraint(equalTo: view.topAnchor),
+            debugLabel.rightAnchor.constraint(equalTo: view.rightAnchor),
         ])
     }
     
@@ -80,21 +81,20 @@ class KeyboardViewController: UIInputViewController, KeyboardLettersDelegate, Ke
     func didTap(onKeyboardKey keyValue: String) {
         let sharedTransformer = Transformer.shared
         sharedTransformer.textDocumentProxy = self.textDocumentProxy
-        var outPut = ""
-        if keyValue == "-" {
-            if let textLength = textDocumentProxy.documentContextBeforeInput?.count {
-                outPut = String(textLength)
-            }
-            textDocumentProxy.deleteBackward()
+        sharedTransformer.debugLabel = debugLabel
+        sharedTransformer.insertText(keyValue)
+//        var debugText = ""
+//        if keyValue == "=" {
+//            if let textLength = textDocumentProxy.documentContextBeforeInput?.count {
+//                debugText = String(textLength)
+//            }
 //            textDocumentProxy.deleteBackward()
-//            textDocumentProxy.deleteBackward()
-
-            if let textLength = textDocumentProxy.documentContextBeforeInput?.count {
-                outPut = outPut + "|" + String(textLength)
-            }
-            myLabel.text = outPut
-        } else {
-            sharedTransformer.insertText(keyValue)
-        }
+//
+//            if let textLength = textDocumentProxy.documentContextBeforeInput?.count {
+//                debugText = debugText + "|" + String(textLength)
+//            }
+//        } else {
+//            sharedTransformer.insertText(keyValue)
+//        }
     }
 }
