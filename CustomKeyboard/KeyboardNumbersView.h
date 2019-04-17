@@ -24,7 +24,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id <KeyboardNumbersDelegate> delegate;
 @property (nonatomic) UIKeyboardAppearance keyboardAppearance;
 
-- (void)didChangeReturnKeyName;
 @end
 
 @protocol KeyboardNumbersDelegate<NSObject>
