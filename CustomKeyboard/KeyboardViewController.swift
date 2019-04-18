@@ -10,6 +10,7 @@ import UIKit
 
 class KeyboardViewController: UIInputViewController, KeyboardLettersDelegate, KeyboardNumbersDelegate {
 
+    let sharedTransformer = Transformer.shared
     var lettersView: KeyboardLettersView!
     var numbersView: KeyboardNumbersView!
     // TODO: Remove this label
@@ -24,6 +25,8 @@ class KeyboardViewController: UIInputViewController, KeyboardLettersDelegate, Ke
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        sharedTransformer.textDocumentProxy = self.textDocumentProxy
 
         lettersView = KeyboardLettersView(frame: CGRect(x: 0, y: 0, width: 250, height: 250))
         lettersView.delegate = self
@@ -79,23 +82,15 @@ class KeyboardViewController: UIInputViewController, KeyboardLettersDelegate, Ke
     }
 
     func didTap(onKeyboardKey keyValue: String) {
-        print("Sourav", keyValue)
-        let sharedTransformer = Transformer.shared
-        sharedTransformer.textDocumentProxy = self.textDocumentProxy
         sharedTransformer.debugLabel = debugLabel
+
+        /// Clear the buffer when context become empty
+        /// When the context changes from externally, reset the buffer
+        /// context is nil when there is no text in the left side
+        if textDocumentProxy.documentContextBeforeInput == nil {
+            sharedTransformer.resetBuffer()
+        }
+
         sharedTransformer.insertText(keyValue)
-//        var debugText = ""
-//        if keyValue == "=" {
-//            if let textLength = textDocumentProxy.documentContextBeforeInput?.count {
-//                debugText = String(textLength)
-//            }
-//            textDocumentProxy.deleteBackward()
-//
-//            if let textLength = textDocumentProxy.documentContextBeforeInput?.count {
-//                debugText = debugText + "|" + String(textLength)
-//            }
-//        } else {
-//            sharedTransformer.insertText(keyValue)
-//        }
     }
 }

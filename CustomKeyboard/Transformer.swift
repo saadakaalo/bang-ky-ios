@@ -139,13 +139,17 @@ class Transformer {
             textDocumentProxy.insertText(tsWord)
             nBngLettersInLastWord = nBngLetters
         }
-        debugLabel.text = String(nBngLettersInLastWord)
+    }
+
+    func resetBuffer() {
+        transletingBufferWordEng = ""
+        nBngLettersInLastWord = 0
     }
 
 
     //TODO: Delete this method, no more necessary
     /// Delete the letters backword as long as there is no blank space
-    func clearBufferWordArchieved() {
+    private func clearBufferWordArchieved() {
         while true {
             guard let previousText = textDocumentProxy.documentContextBeforeInput else {
                 break
@@ -158,13 +162,13 @@ class Transformer {
         }
     }
 
-    func clearBufferWord() {
+    private func clearBufferWord() {
         for _ in 0..<nBngLettersInLastWord {
             textDocumentProxy.deleteBackward()
         }
     }
 
-    func tranliterateWord(_ word: String) -> (String, Int)  {
+    private func tranliterateWord(_ word: String) -> (String, Int)  {
         var shouldConsiderNextShorbornoAsKar = false
         var mutableWord = word
         var tranliteratedWord = ""
