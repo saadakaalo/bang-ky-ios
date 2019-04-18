@@ -11,7 +11,7 @@ import Foundation
 class Transformer {
     static let shared = Transformer()
 
-    let transliterationDict = [
+    private let transliterationDict = [
         "a" : "আ",
         "b" : "ব",
         "c" : "চ",
@@ -84,7 +84,7 @@ class Transformer {
         "rri" : "ৃ",
     ]
 
-    let shorbornoToKars = [
+    private let shorbornoToKars = [
         "অ" : "",
         "আ" : "া",
         "ই" : "ি",
@@ -97,8 +97,8 @@ class Transformer {
         "ঊ" : "ূ",
     ]
 
-    var transletingBufferWordEng = ""
-    var nBngLettersInLastWord = 0
+    private var transletingBufferWordEng = ""
+    private var nBngLettersInLastWord = 0
 
     // TODO: This two property should not be implicit optional
     weak var textDocumentProxy: UITextDocumentProxy!
@@ -110,13 +110,12 @@ class Transformer {
 
     func insertText(_ text: String) {
         if text == " " {
-            transletingBufferWordEng = ""
-            nBngLettersInLastWord = 0
+            resetBuffer()
             textDocumentProxy.insertText(text)
         } else if text == "-" {
             /// When no text to delete backword
-            if let textLength = textDocumentProxy.documentContextBeforeInput?.count, textLength <= 0 {
-                nBngLettersInLastWord = 0
+            if textDocumentProxy.documentContextBeforeInput == nil {
+                resetBuffer()
             }
             /// When transletting Eng word is not empty
             else if transletingBufferWordEng.count > 0 {
