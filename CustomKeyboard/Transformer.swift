@@ -146,22 +146,6 @@ class Transformer {
         nBngLettersInLastWord = 0
     }
 
-
-    //TODO: Delete this method, no more necessary
-    /// Delete the letters backword as long as there is no blank space
-    private func clearBufferWordArchieved() {
-        while true {
-            guard let previousText = textDocumentProxy.documentContextBeforeInput else {
-                break
-            }
-            if previousText.count == 0 || previousText.hasSuffix(" ") {
-                break
-            }
-
-            textDocumentProxy.deleteBackward()
-        }
-    }
-
     private func clearBufferWord() {
         for _ in 0..<nBngLettersInLastWord {
             textDocumentProxy.deleteBackward()
