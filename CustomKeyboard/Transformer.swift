@@ -11,7 +11,115 @@ import Foundation
 class Transformer {
     static let shared = Transformer()
 
-    private let transliterationDict = [
+    private var transletingBufferWordEng = ""
+    private var nBngLettersInLastWord = 0
+
+    // TODO: This two property should not be implicit optional
+    weak var textDocumentProxy: UITextDocumentProxy!
+    weak var debugLabel: UILabel!
+
+    private init() {
+        // Private initialization to ensure just one instance is created.
+    }
+
+    func insertText(_ text: String) {
+        if text == " " {
+            resetBuffer()
+            textDocumentProxy.insertText(text)
+        } else if text == "-" {
+            /// When no text to delete backword
+            if textDocumentProxy.documentContextBeforeInput == nil {
+                resetBuffer()
+            }
+            /// When transletting Eng word is not empty
+            else if transletingBufferWordEng.count > 0 {
+                transletingBufferWordEng.removeLast()
+                let (tsWord, nBngLetters) = tranliterateWord(transletingBufferWordEng)
+                clearBufferWord()
+                textDocumentProxy.insertText(tsWord)
+                nBngLettersInLastWord = nBngLetters
+            }
+            /// When transletting Eng word is empty
+            else {
+                textDocumentProxy.deleteBackward()
+                nBngLettersInLastWord = 0
+            }
+        } else {
+            transletingBufferWordEng += text
+            let (tsWord, nBngLetters) = tranliterateWord(transletingBufferWordEng)
+
+            clearBufferWord()
+            textDocumentProxy.insertText(tsWord)
+            nBngLettersInLastWord = nBngLetters
+        }
+    }
+
+    func resetBuffer() {
+        transletingBufferWordEng = ""
+        nBngLettersInLastWord = 0
+    }
+
+    private func clearBufferWord() {
+        for _ in 0..<nBngLettersInLastWord {
+            textDocumentProxy.deleteBackward()
+        }
+    }
+
+    private func tranliterateWord(_ word: String) -> (String, Int)  {
+        var shouldConsiderNextShorbornoAsKar = false
+        var mutableWord = word
+        var tranliteratedWord = ""
+        
+        let sortedKeys = letterToBornoDict.keys.sorted { (fistString, secondString) -> Bool in
+            if fistString.count != secondString.count {
+                return fistString.count > secondString.count
+            }
+            return fistString > secondString
+        }
+        
+        var nBngLettersAdded = 0
+        while mutableWord.count > 0 {
+            var isAnyKeyMatched = false
+            for key in sortedKeys {
+                /// The value should always be there, so forced unwrapped
+                let borno = letterToBornoDict[key]!
+
+                if mutableWord.starts(with: key) {
+                    isAnyKeyMatched = true
+
+                    /// Add kar instead of borno when the shorborno is in middle of a word
+                    if shouldConsiderNextShorbornoAsKar, let kar = shorbornoToKars[borno] {
+                        tranliteratedWord += kar
+                        mutableWord.removeFirst(key.count)
+                        nBngLettersAdded += kar.count
+                    } else {
+                        tranliteratedWord += borno
+                        mutableWord.removeFirst(key.count)
+                        nBngLettersAdded += borno.count
+                    }
+
+                    let isShorborno = shorbornoToKars[borno] != nil
+                    if isShorborno {
+                        shouldConsiderNextShorbornoAsKar = false
+                    } else {
+                        shouldConsiderNextShorbornoAsKar = true
+                    }
+
+                    break
+                }
+            }
+            if isAnyKeyMatched == false {
+                tranliteratedWord += String(mutableWord.prefix(1))
+                mutableWord.removeFirst(1)
+                nBngLettersAdded += 1
+                shouldConsiderNextShorbornoAsKar = false
+            }
+        }
+        return (tranliteratedWord, nBngLettersAdded)
+    }
+
+
+    private let letterToBornoDict = [
         "a" : "আ",
         "b" : "ব",
         "c" : "চ",
@@ -81,7 +189,7 @@ class Transformer {
         "Oi" : "ঐ",
         "OU" : "ঔ",
         "OI" : "ঐ",
-        "rri" : "ৃ",
+        "rri" : "ঋ",
     ]
 
     private let shorbornoToKars = [
@@ -95,114 +203,8 @@ class Transformer {
         "ঔ" : "ৌ",
         "উ" : "ু",
         "ঊ" : "ূ",
+        "ঋ" : "ৃ",
     ]
-
-    private var transletingBufferWordEng = ""
-    private var nBngLettersInLastWord = 0
-
-    // TODO: This two property should not be implicit optional
-    weak var textDocumentProxy: UITextDocumentProxy!
-    weak var debugLabel: UILabel!
-
-    private init() {
-        // Private initialization to ensure just one instance is created.
-    }
-
-    func insertText(_ text: String) {
-        if text == " " {
-            resetBuffer()
-            textDocumentProxy.insertText(text)
-        } else if text == "-" {
-            /// When no text to delete backword
-            if textDocumentProxy.documentContextBeforeInput == nil {
-                resetBuffer()
-            }
-            /// When transletting Eng word is not empty
-            else if transletingBufferWordEng.count > 0 {
-                transletingBufferWordEng.removeLast()
-                let (tsWord, nBngLetters) = tranliterateWord(transletingBufferWordEng)
-                clearBufferWord()
-                textDocumentProxy.insertText(tsWord)
-                nBngLettersInLastWord = nBngLetters
-            }
-            /// When transletting Eng word is empty
-            else {
-                textDocumentProxy.deleteBackward()
-                nBngLettersInLastWord = 0
-            }
-        } else {
-            transletingBufferWordEng += text
-            let (tsWord, nBngLetters) = tranliterateWord(transletingBufferWordEng)
-
-            clearBufferWord()
-            textDocumentProxy.insertText(tsWord)
-            nBngLettersInLastWord = nBngLetters
-        }
-    }
-
-    func resetBuffer() {
-        transletingBufferWordEng = ""
-        nBngLettersInLastWord = 0
-    }
-
-    private func clearBufferWord() {
-        for _ in 0..<nBngLettersInLastWord {
-            textDocumentProxy.deleteBackward()
-        }
-    }
-
-    private func tranliterateWord(_ word: String) -> (String, Int)  {
-        var shouldConsiderNextShorbornoAsKar = false
-        var mutableWord = word
-        var tranliteratedWord = ""
-        
-        let sortedKeys = transliterationDict.keys.sorted { (fistString, secondString) -> Bool in
-            if fistString.count != secondString.count {
-                return fistString.count > secondString.count
-            }
-            return fistString > secondString
-        }
-        
-        var nBngLettersAdded = 0
-        while mutableWord.count > 0 {
-            var isAnyKeyMatched = false
-            for key in sortedKeys {
-                /// The value should always be there, so forced unwrapped
-                let borno = transliterationDict[key]!
-
-                if mutableWord.starts(with: key) {
-                    isAnyKeyMatched = true
-
-                    /// Add kar instead of borno when the shorborno is in middle of a word
-                    if shouldConsiderNextShorbornoAsKar, let kar = shorbornoToKars[borno] {
-                        tranliteratedWord += kar
-                        mutableWord.removeFirst(key.count)
-                        nBngLettersAdded += kar.count
-                    } else {
-                        tranliteratedWord += borno
-                        mutableWord.removeFirst(key.count)
-                        nBngLettersAdded += borno.count
-                    }
-
-                    let isShorborno = shorbornoToKars[borno] != nil
-                    if isShorborno {
-                        shouldConsiderNextShorbornoAsKar = false
-                    } else {
-                        shouldConsiderNextShorbornoAsKar = true
-                    }
-
-                    break
-                }
-            }
-            if isAnyKeyMatched == false {
-                tranliteratedWord += String(mutableWord.prefix(1))
-                mutableWord.removeFirst(1)
-                nBngLettersAdded += 1
-                shouldConsiderNextShorbornoAsKar = false
-            }
-        }
-        return (tranliteratedWord, nBngLettersAdded)
-    }
 
 }
 

@@ -51,6 +51,7 @@ class KeyboardViewController: UIInputViewController, KeyboardLettersDelegate, Ke
             numbersView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
 
+        /// TODO: Delete this below code, they are now for debug purpose
         debugLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 500, height: 20))
         debugLabel.text = "No text yet"
         view.addSubview(debugLabel)
