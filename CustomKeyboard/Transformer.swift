@@ -17,6 +17,9 @@ class Transformer {
     // TODO: This two property should not be implicit optional
     weak var textDocumentProxy: UITextDocumentProxy!
     weak var debugLabel: UILabel!
+    
+    //Settings
+    let autometicJuktoborno = true
 
     private init() {
         // Private initialization to ensure just one instance is created.
@@ -66,11 +69,14 @@ class Transformer {
     }
 
     private func tranliterateWord(_ word: String) -> (String, Int)  {
+
+        let letterToBornoLocal = autometicJuktoborno ? letterToAnyborno : letterToBorno
+
         var shouldConsiderNextShorbornoAsKar = false
         var mutableWord = word
         var tranliteratedWord = ""
         
-        let sortedKeys = letterToBornoDict.keys.sorted { (fistString, secondString) -> Bool in
+        let sortedKeys = letterToBornoLocal.keys.sorted { (fistString, secondString) -> Bool in
             if fistString.count != secondString.count {
                 return fistString.count > secondString.count
             }
@@ -82,7 +88,7 @@ class Transformer {
             var isAnyKeyMatched = false
             for key in sortedKeys {
                 /// The value should always be there, so forced unwrapped
-                let borno = letterToBornoDict[key]!
+                let borno = letterToBornoLocal[key]!
 
                 if mutableWord.starts(with: key) {
                     isAnyKeyMatched = true
@@ -119,7 +125,7 @@ class Transformer {
     }
 
 
-    private let letterToBornoDict = [
+    private let letterToBorno = [
         "a" : "আ",
         "b" : "ব",
         "c" : "চ",
@@ -219,7 +225,7 @@ class Transformer {
     ]
 
     private var letterToAnyborno: [String : String] {
-        return letterToBornoDict.merging(letterToJuktoborno, uniquingKeysWith: { (first, _) in first })
+        return letterToBorno.merging(letterToJuktoborno, uniquingKeysWith: { (first, _) in first })
     }
 
     private let shorbornoToKars = [
