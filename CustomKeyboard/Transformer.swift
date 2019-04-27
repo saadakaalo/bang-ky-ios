@@ -92,6 +92,8 @@ class Transformer {
 
                 if mutableWord.starts(with: key) {
                     isAnyKeyMatched = true
+                    
+                    debugLabel.text = key
 
                     /// Add kar instead of borno when the shorborno is in middle of a word
                     if shouldConsiderNextShorbornoAsKar, let kar = shorbornoToKars[borno] {
@@ -102,6 +104,11 @@ class Transformer {
                         tranliteratedWord += borno
                         mutableWord.removeFirst(key.count)
                         nBngLettersAdded += borno.count
+                        
+                        /// Extra backspace for hoshonto's
+                        if borno.count > 1 {
+                            nBngLettersAdded += (borno.count - 1)
+                        }
                     }
 
                     let isShorborno = shorbornoToKars[borno] != nil
