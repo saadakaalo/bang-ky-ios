@@ -136,7 +136,7 @@ class Transformer {
         "c" : "চ",
         "d" : "দ",
         "e" : "এ",
-        "f" : "ফ",
+        "f" : "ফ",//duplicate
         "g" : "গ",
         "h" : "হ",
         "i" : "ই",
@@ -152,17 +152,17 @@ class Transformer {
         "s" : "স",
         "t" : "ত",
         "u" : "উ",
-        "v" : "ভ",
+        "v" : "ভ",//duplicate
         "w" : "@",//extra
         "x" : "@",//extra
         "y" : "য়",
         "z" : "য",
         "A" : "আ",
-        "B" : "ভ",
+        "B" : "@",//extra
         "C" : "ছ",
         "D" : "ড",
         "E" : "ঐ",
-        "F" : "ফ",
+        "F" : "ফ",//duplicate
         "G" : "ঘ",
         "H" : "ঃ",
         "I" : "ঈ",
@@ -175,7 +175,7 @@ class Transformer {
         "P" : "@",//extra
         "Q" : "@",//extra
         "R" : "ড়",
-        "S" : "শ",
+        "S" : "শ",//duplicate
         "T" : "ট",
         "U" : "ঊ",
         "V" : "@",//extra
@@ -183,14 +183,14 @@ class Transformer {
         "X" : "@",//extra
         "Y" : "@",//extra
         "Z" : "@",//extra
-        "bh" : "ভ",
+        "bh" : "ভ",//duplicate
         "ch" : "ছ",
         "dh" : "ধ",
         "kh" : "খ",
         "gh" : "ঘ",
         "jh" : "ঝ",
-        "ph" : "ফ",
-        "sh" : "শ",
+        "ph" : "ফ",//duplicate
+        "sh" : "শ",//duplicate
         "th" : "থ",
         "Dh" : "ঢ",
         "Sh" : "ষ",
