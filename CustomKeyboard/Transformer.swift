@@ -209,6 +209,7 @@ class Transformer {
         "TH" : "ৎ",
         "kkh" : "ক্ষ",
         "gg" : "জ্ঞ",
+        "qq" : "ঁ",
     ]
 
     private let letterToJuktoborno = [
