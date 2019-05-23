@@ -75,14 +75,14 @@ class Transformer {
         var shouldConsiderNextShorbornoAsKar = false
         var mutableWord = word
         var tranliteratedWord = ""
-        
+
         let sortedKeys = letterToBornoLocal.keys.sorted { (fistString, secondString) -> Bool in
             if fistString.count != secondString.count {
                 return fistString.count > secondString.count
             }
             return fistString > secondString
         }
-        
+
         var nBngLettersAdded = 0
         while mutableWord.count > 0 {
             var isAnyKeyMatched = false
@@ -92,8 +92,6 @@ class Transformer {
 
                 if mutableWord.starts(with: key) {
                     isAnyKeyMatched = true
-                    
-                    debugLabel.text = key
 
                     /// Add kar instead of borno when the shorborno is in middle of a word
                     if shouldConsiderNextShorbornoAsKar, let kar = shorbornoToKars[borno] {
@@ -204,8 +202,13 @@ class Transformer {
         "OI" : "ঐ",
         "rri" : "ঋ",
 
+        /// Special Considerations
         "Ng" : "ঙ",
         "ng" : "ং",
+        "NG" : "ঞ",
+        "TH" : "ৎ",
+        "kkh" : "ক্ষ",
+        "gg" : "জ্ঞ",
     ]
 
     private let letterToJuktoborno = [
@@ -363,6 +366,8 @@ class Transformer {
         "ps" : "প্স",
         "phs" : "ফ্র",
         "phl" : "ফ্ল",
+        "fs" : "ফ্র",
+        "fl" : "ফ্ল",
         "bj" : "ব্জ",
         "bd" : "ব্দ",
         "bdh" : "ব্ধ",
@@ -373,6 +378,9 @@ class Transformer {
         "bhb" : "ভ্ব",
         "bhy" : "ভ্য",
         "bhr" : "ভ্র",
+        "vb" : "ভ্ব",
+        "vy" : "ভ্য",
+        "vr" : "ভ্র",
         "mn" : "ম্ন",
         "mp" : "ম্প",
         "mpr" : "ম্প্র",
@@ -452,6 +460,14 @@ class Transformer {
         "shy" : "শ্য",
         "shr" : "শ্র",
         "shl" : "শ্ল",
+        "Sc" : "শ্চ",
+        "Sch" : "শ্ছ",
+        "Sn" : "শ্ন",
+        "Sb" : "শ্ব",
+        "Sm" : "শ্ম",
+        "Sy" : "শ্য",
+        "Sr" : "শ্র",
+        "Sl" : "শ্ল",
         "Shk" : "ষ্ক",
         "Shkr" : "ষ্ক্র",
         "ShT" : "ষ্ট",
