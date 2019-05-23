@@ -27,6 +27,16 @@ NS_ASSUME_NONNULL_BEGIN
     }
 }
 
+- (void)setHighlighted:(BOOL)highlighted {
+    [super setHighlighted:highlighted];
+
+    if (highlighted) {
+        self.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1];
+    } else {
+        self.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
+    }
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

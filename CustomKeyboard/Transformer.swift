@@ -156,7 +156,7 @@ class Transformer {
         "u" : "উ",
         "v" : "ভ",
         "w" : "ঊ",
-        "x" : "্স",
+        "x" : "ক্স",
         "y" : "য়",
         "z" : "য",
         "A" : "আ",
@@ -203,6 +203,9 @@ class Transformer {
         "OU" : "ঔ",
         "OI" : "ঐ",
         "rri" : "ঋ",
+
+        "Ng" : "ঙ",
+        "ng" : "ং",
     ]
 
     private let letterToJuktoborno = [
