@@ -153,8 +153,6 @@ class Transformer {
         "t" : "ত",
         "u" : "উ",
         "v" : "ভ",//duplicate
-        "w" : "্ব",//Special consideration
-        "x" : "ক্স",//extra
         "y" : "য়",
         "z" : "য",
         "A" : "আ",
@@ -164,7 +162,6 @@ class Transformer {
         "E" : "ঐ",
         "F" : "ফ",//duplicate
         "G" : "গ",//duplicate
-        "H" : "ঃ",//Special consideration
         "I" : "ঈ",
         "J" : "ঝ",
         "K" : "খ",
@@ -179,8 +176,6 @@ class Transformer {
         "T" : "ট",
         "U" : "ঊ",
         "V" : "ভ",//duplicate
-        "W" : "্ব",//Special consideration
-        "X" : "ক্স",//extra
         "Y" : "য়",//duplicate
         "Z" : "য",//duplicate
         "bh" : "ভ",//duplicate
@@ -210,6 +205,11 @@ class Transformer {
         "kkh" : "ক্ষ",
         "gg" : "জ্ঞ",
         "qq" : "ঁ",
+        "w" : "্ব",
+        "x" : "ক্স",
+        "H" : "ঃ",
+        "W" : "্ব",
+        "X" : "ক্স",
     ]
 
     private let letterToJuktoborno = [
