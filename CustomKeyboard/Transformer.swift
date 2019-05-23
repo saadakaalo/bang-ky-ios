@@ -153,36 +153,36 @@ class Transformer {
         "t" : "ত",
         "u" : "উ",
         "v" : "ভ",//duplicate
-        "w" : "@",//extra
-        "x" : "@",//extra
+        "w" : "্ব",//Special consideration
+        "x" : "ক্স",//extra
         "y" : "য়",
         "z" : "য",
         "A" : "আ",
-        "B" : "@",//extra
+        "B" : "ব",//duplicate
         "C" : "ছ",
         "D" : "ড",
         "E" : "ঐ",
         "F" : "ফ",//duplicate
-        "G" : "ঘ",
-        "H" : "ঃ",
+        "G" : "গ",//duplicate
+        "H" : "ঃ",//Special consideration
         "I" : "ঈ",
         "J" : "ঝ",
         "K" : "খ",
-        "L" : "@",//extra
+        "L" : "ল",//duplicate
         "M" : "ং",
         "N" : "ণ",
         "O" : "ও",
-        "P" : "@",//extra
-        "Q" : "@",//extra
+        "P" : "প",//duplicate
+        "Q" : "্",//duplicate
         "R" : "ড়",
         "S" : "শ",//duplicate
         "T" : "ট",
         "U" : "ঊ",
-        "V" : "@",//extra
-        "W" : "@",//extra
-        "X" : "@",//extra
-        "Y" : "@",//extra
-        "Z" : "@",//extra
+        "V" : "ভ",//duplicate
+        "W" : "্ব",//Special consideration
+        "X" : "ক্স",//extra
+        "Y" : "য়",//duplicate
+        "Z" : "য",//duplicate
         "bh" : "ভ",//duplicate
         "ch" : "ছ",
         "dh" : "ধ",
@@ -200,9 +200,9 @@ class Transformer {
         "Oi" : "ঐ",
         "OU" : "ঔ",
         "OI" : "ঐ",
-        "rri" : "ঋ",
 
         /// Special Considerations
+        "rri" : "ঋ",
         "Ng" : "ঙ",
         "ng" : "ং",
         "NG" : "ঞ",
