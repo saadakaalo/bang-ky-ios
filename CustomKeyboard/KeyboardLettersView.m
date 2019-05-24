@@ -88,6 +88,7 @@ static NSString *kShift = @"⬆︎";
                     break;
                 case kIndexBackspace: {
                     [button addTarget:self action:@selector(didBackspace:) forControlEvents:UIControlEventTouchUpInside];
+
                     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressOnBackspace:)];
                     [button addGestureRecognizer:longPress];
                 }

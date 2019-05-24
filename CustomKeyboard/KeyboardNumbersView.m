@@ -31,6 +31,7 @@ static NSString *const kShiftS = @"[]{}#%^*+=_\\|~<>€£¥•⇧.,?!'⌫";
 @interface KeyboardNumbersView()
 @property(nonatomic) NSArray *keys;
 @property(nonatomic) BoardStateEnum boardState;
+@property NSTimer *longPressBackspaceTimer;
 @end
 
 enum {
@@ -70,8 +71,12 @@ enum {
                     [button setTitle:@"#+=" forState:UIControlStateNormal];
                     [button addTarget:self action:@selector(didShift:) forControlEvents:UIControlEventTouchUpInside];
                     break;
-                case kIndexBackspace:
+                case kIndexBackspace: {
                     [button addTarget:self action:@selector(didBackspace:) forControlEvents:UIControlEventTouchUpInside];
+
+                    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressOnBackspace:)];
+                    [button addGestureRecognizer:longPress];
+                }
                     break;
                 case kIndexLetters:
                     [button setTitle:@"ABC" forState:UIControlStateNormal];
@@ -269,6 +274,33 @@ enum {
                 [button setTitle:[s substringWithRange:NSMakeRange(i, 1)] forState:UIControlStateNormal];
             }
         }
+    }
+}
+
+- (void)longPressOnBackspace:(UILongPressGestureRecognizer*)gesture {
+
+    switch (gesture.state) {
+        case UIGestureRecognizerStateBegan: {
+            _longPressBackspaceTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 repeats:YES block:^(NSTimer * _Nonnull timer) {
+                [self->_delegate didTapOnKeyboardKey:@"-"];
+            }];
+        }
+            break;
+        case UIGestureRecognizerStateChanged: {
+        }
+            break;
+        case UIGestureRecognizerStateEnded: {
+            [_longPressBackspaceTimer invalidate];
+            _longPressBackspaceTimer = nil;
+        }
+            break;
+        case UIGestureRecognizerStateCancelled: {
+            [_longPressBackspaceTimer invalidate];
+            _longPressBackspaceTimer = nil;
+        }
+            break;
+        default:
+            break;
     }
 }
 
