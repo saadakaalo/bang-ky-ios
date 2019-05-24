@@ -338,10 +338,6 @@ static NSString *kShift = @"⬆︎";
     }
 }
 
-- (void)deleteLetter:(NSTimer *)timer {
-    //do smth
-}
-
 @end
 
 NS_ASSUME_NONNULL_END
