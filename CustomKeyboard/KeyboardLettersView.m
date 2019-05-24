@@ -42,6 +42,7 @@ static NSString *kShift = @"⬆︎";
 @interface KeyboardLettersView()
 @property(nonatomic) NSArray *keys;
 @property(nonatomic) BoardStateEnum boardState;
+@property NSTimer *longPressBackspaceTimer;
 @end
 
 @implementation KeyboardLettersView
@@ -314,25 +315,31 @@ static NSString *kShift = @"⬆︎";
 
     switch (gesture.state) {
         case UIGestureRecognizerStateBegan: {
-            [_delegate didTapOnKeyboardKey:@"-"];
+            _longPressBackspaceTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 repeats:YES block:^(NSTimer * _Nonnull timer) {
+                [self->_delegate didTapOnKeyboardKey:@"-"];
+            }];
         }
             break;
         case UIGestureRecognizerStateChanged: {
-            [_delegate didTapOnKeyboardKey:@"-"];
         }
             break;
         case UIGestureRecognizerStateEnded: {
-            [_delegate didTapOnKeyboardKey:@"-"];
+            [_longPressBackspaceTimer invalidate];
+            _longPressBackspaceTimer = nil;
         }
             break;
         case UIGestureRecognizerStateCancelled: {
-            [_delegate didTapOnKeyboardKey:@""];
+            [_longPressBackspaceTimer invalidate];
+            _longPressBackspaceTimer = nil;
         }
             break;
         default:
-            [_delegate didTapOnKeyboardKey:@""];
             break;
     }
+}
+
+- (void)deleteLetter:(NSTimer *)timer {
+    //do smth
 }
 
 @end
