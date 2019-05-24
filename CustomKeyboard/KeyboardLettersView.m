@@ -75,16 +75,21 @@ static NSString *kShift = @"⬆︎";
                     [button setTitle:kShift forState:UIControlStateNormal];
                     [button addTarget:self action:@selector(didShift:) forControlEvents:UIControlEventTouchUpInside];
 
-                    ///We dont need this feature now for out keyboard.
-                    ///Do not remove this code, may use later.
+                    /**
+                    /// We dont need this feature now for out keyboard.
+                    /// Do not remove this code, may use later.
                     /// FIXME: This double tap recogniser slowed down the shift operation
-//                    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didDoubleTap:)];
-//                    [tapper setNumberOfTapsRequired:2];
-//                    [button addGestureRecognizer:tapper];
+                    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didDoubleTap:)];
+                    [tapper setNumberOfTapsRequired:2];
+                    [button addGestureRecognizer:tapper];
+                     **/
                 }
                     break;
-                case kIndexBackspace:
+                case kIndexBackspace: {
                     [button addTarget:self action:@selector(didBackspace:) forControlEvents:UIControlEventTouchUpInside];
+                    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressOnBackspace:)];
+                    [button addGestureRecognizer:longPress];
+                }
                     break;
                 case kIndexNumbers:
                     [button setTitle:@"123" forState:UIControlStateNormal];
@@ -302,6 +307,31 @@ static NSString *kShift = @"⬆︎";
         [button setTitleColor:textColor forState:UIControlStateNormal];
         [button setTitleColor:textDisabledColor forState:UIControlStateDisabled];
         [button setBackgroundColor:keyBackgroundColor];
+    }
+}
+
+- (void)longPressOnBackspace:(UILongPressGestureRecognizer*)gesture {
+
+    switch (gesture.state) {
+        case UIGestureRecognizerStateBegan: {
+            [_delegate didTapOnKeyboardKey:@"-"];
+        }
+            break;
+        case UIGestureRecognizerStateChanged: {
+            [_delegate didTapOnKeyboardKey:@"-"];
+        }
+            break;
+        case UIGestureRecognizerStateEnded: {
+            [_delegate didTapOnKeyboardKey:@"-"];
+        }
+            break;
+        case UIGestureRecognizerStateCancelled: {
+            [_delegate didTapOnKeyboardKey:@""];
+        }
+            break;
+        default:
+            [_delegate didTapOnKeyboardKey:@""];
+            break;
     }
 }
 
